@@ -1,5 +1,13 @@
+# Core ML & Vision
 torch
 torchvision
 opencv-contrib-python
 numpy
 Pillow
+
+# Web API & Server
+flask==3.0.0
+flask-cors==4.0.0
+
+# Desktop GUI
+PyQt5  # Hapus ==5.15.9 biar ambil latest binary

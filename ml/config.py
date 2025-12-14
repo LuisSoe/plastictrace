@@ -10,3 +10,4 @@ RECOMMENDATION = {
     "PP":   "Wadah makanan/kantong tertentu. Bila bersih, daur ulang; jika tidak ada fasilitas, buang sebagai residu.",
     "PS":   "Styrofoam/foam. Sulit didaur ulang; hindari pembakaran, buang ke sampah residu.",
 }
+
