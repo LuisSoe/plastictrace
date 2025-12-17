@@ -1,0 +1,16 @@
+# Core ML & Vision
+torch
+torchvision
+opencv-python
+numpy>=2.3.5  # Use version with pre-built wheels for Python 3.14
+Pillow
+
+# Optional (for tracking)
+opencv-contrib-python
+
+# Desktop GUI
+PyQt5
+
+# Web API & Server
+flask==3.0.0
+flask-cors==4.0.0

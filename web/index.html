@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlastiTrace - AI Plastic Classifier</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState, useRef, useEffect } = React;
+
+        // Lucide Icons sebagai SVG components
+        const Camera = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        );
+
+        const Upload = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+            </svg>
+        );
+
+        const X = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        );
+
+        const Zap = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+        );
+
+        const AlertCircle = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" strokeWidth={2} />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01" />
+            </svg>
+        );
+
+        const CheckCircle2 = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+        );
+
+        const Recycle = ({ className }) => (
+            <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+        );
+
+        const RECOMMENDATION = {
+            'HDPE': 'Umumnya bisa didaur ulang. Bilas dan masukkan ke sampah daur ulang plastik keras.',
+            'PET': 'Botol minum plastik. Bilas, lepas label bila memungkinkan, buang ke sampah daur ulang.',
+            'PP': 'Wadah makanan/kantong tertentu. Bila bersih, daur ulang; jika tidak ada fasilitas, buang sebagai residu.',
+            'PS': 'Styrofoam/foam. Sulit didaur ulang; hindari pembakaran, buang ke sampah residu.'
+        };
+
+        const PlastiTrace = () => {
+            const [mode, setMode] = useState('upload');
+            const [image, setImage] = useState(null);
+            const [prediction, setPrediction] = useState(null);
+            const [isProcessing, setIsProcessing] = useState(false);
+            const [stream, setStream] = useState(null);
+            const [isCameraActive, setIsCameraActive] = useState(false);
+            const [error, setError] = useState(null);
+            
+            const videoRef = useRef(null);
+            const canvasRef = useRef(null);
+            const fileInputRef = useRef(null);
+
+            // Real API call to backend
+            const classifyImage = async (imageData) => {
+                try {
+                    const blob = await fetch(imageData).then(r => r.blob());
+                    const formData = new FormData();
+                    formData.append('image', blob, 'image.jpg');
+                    
+                    const response = await fetch('http://localhost:5001/api/classify', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Classification failed');
+                    }
+                    
+                    const result = await response.json();
+                    
+                    return {
+                        label: result.label,
+                        confidence: result.confidence,
+                        recommendation: RECOMMENDATION[result.label] || 'Tidak ada rekomendasi tersedia.'
+                    };
+                } catch (err) {
+                    console.error('API Error:', err);
+                    throw err;
+                }
+            };
+
+            const startCamera = async () => {
+                try {
+                    const mediaStream = await navigator.mediaDevices.getUserMedia({ 
+                        video: { 
+                            facingMode: 'environment',
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 }
+                        } 
+                    });
+                    
+                    setStream(mediaStream);
+                    setIsCameraActive(true);
+                    setError(null);
+                } catch (err) {
+                    console.error('Camera error:', err);
+                    setError('Tidak dapat mengakses kamera: ' + err.message);
+                }
+            };
+
+            const stopCamera = () => {
+                if (stream) {
+                    stream.getTracks().forEach(track => track.stop());
+                    setStream(null);
+                }
+                setIsCameraActive(false);
+            };
+
+            const capturePhoto = () => {
+                if (videoRef.current && canvasRef.current) {
+                    const video = videoRef.current;
+                    const canvas = canvasRef.current;
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0);
+                    const imageDataUrl = canvas.toDataURL('image/jpeg');
+                    setImage(imageDataUrl);
+                    stopCamera();
+                    processImage(imageDataUrl);
+                }
+            };
+
+            const handleFileUpload = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (event) => {
+                        setImage(event.target.result);
+                        processImage(event.target.result);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+
+            const processImage = async (imageData) => {
+                setIsProcessing(true);
+                setPrediction(null);
+                setError(null);
+                
+                try {
+                    const result = await classifyImage(imageData);
+                    setPrediction(result);
+                } catch (err) {
+                    setError('Gagal mengklasifikasi gambar. Pastikan backend berjalan di http://localhost:5001');
+                    console.error('Classification error:', err);
+                } finally {
+                    setIsProcessing(false);
+                }
+            };
+
+            const reset = () => {
+                setImage(null);
+                setPrediction(null);
+                setIsProcessing(false);
+                setError(null);
+                stopCamera();
+            };
+
+            // Effect to handle video stream
+            useEffect(() => {
+                if (videoRef.current && stream && isCameraActive) {
+                    videoRef.current.srcObject = stream;
+                    videoRef.current.onloadedmetadata = () => {
+                        videoRef.current.play().catch(err => {
+                            console.error('Play failed:', err);
+                        });
+                    };
+                }
+            }, [stream, isCameraActive]);
+
+            // Effect to handle mode changes
+            useEffect(() => {
+                if (mode === 'camera' && !isCameraActive && !image) {
+                    startCamera();
+                } else if (mode === 'upload') {
+                    stopCamera();
+                }
+            }, [mode]);
+
+            // Cleanup on unmount
+            useEffect(() => {
+                return () => {
+                    if (stream) {
+                        stream.getTracks().forEach(track => track.stop());
+                    }
+                };
+            }, []);
+
+            const getRecyclingStatus = (label) => {
+                const recyclable = ['PET', 'HDPE', 'PP'];
+                const difficult = ['PS'];
+                if (recyclable.includes(label)) return 'recyclable';
+                if (difficult.includes(label)) return 'difficult';
+                return 'conditional';
+            };
+
+            return (
+                <div className="min-h-screen bg-gradient-to-br from-emerald-50 via-teal-50 to-cyan-50">
+                    {/* Header */}
+                    <div className="bg-gradient-to-r from-emerald-600 to-teal-600 text-white py-6 px-4 shadow-lg">
+                        <div className="max-w-6xl mx-auto">
+                            <div className="flex items-center gap-3 mb-2">
+                                <Recycle className="w-10 h-10" />
+                                <h1 className="text-4xl font-bold">PlastiTrace</h1>
+                            </div>
+                            <p className="text-emerald-100">Klasifikasi Jenis Plastik & Panduan Daur Ulang Berbasis AI</p>
+                        </div>
+                    </div>
+
+                    <div className="max-w-6xl mx-auto p-4 md:p-8">
+                        {/* Error Alert */}
+                        {error && (
+                            <div className="mb-6 bg-red-50 border border-red-200 rounded-xl p-4 flex items-start gap-3">
+                                <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-0.5" />
+                                <div>
+                                    <h4 className="font-semibold text-red-800 mb-1">Error</h4>
+                                    <p className="text-sm text-red-700">{error}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Mode Selection */}
+                        {!image && (
+                            <div className="mb-8">
+                                <div className="bg-white rounded-2xl shadow-xl p-6">
+                                    <h2 className="text-2xl font-bold text-gray-800 mb-4">Pilih Metode Input</h2>
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <button
+                                            onClick={() => setMode('camera')}
+                                            className={`p-6 rounded-xl border-2 transition-all ${
+                                                mode === 'camera'
+                                                    ? 'border-emerald-500 bg-emerald-50 shadow-lg scale-105'
+                                                    : 'border-gray-200 hover:border-emerald-300 hover:shadow-md'
+                                            }`}
+                                        >
+                                            <Camera className={`w-12 h-12 mx-auto mb-3 ${mode === 'camera' ? 'text-emerald-600' : 'text-gray-400'}`} />
+                                            <h3 className="font-semibold text-lg mb-1">Gunakan Kamera</h3>
+                                            <p className="text-sm text-gray-600">Ambil foto plastik langsung</p>
+                                        </button>
+                                        
+                                        <button
+                                            onClick={() => {
+                                                setMode('upload');
+                                                fileInputRef.current?.click();
+                                            }}
+                                            className={`p-6 rounded-xl border-2 transition-all ${
+                                                mode === 'upload'
+                                                    ? 'border-emerald-500 bg-emerald-50 shadow-lg scale-105'
+                                                    : 'border-gray-200 hover:border-emerald-300 hover:shadow-md'
+                                            }`}
+                                        >
+                                            <Upload className={`w-12 h-12 mx-auto mb-3 ${mode === 'upload' ? 'text-emerald-600' : 'text-gray-400'}`} />
+                                            <h3 className="font-semibold text-lg mb-1">Upload Gambar</h3>
+                                            <p className="text-sm text-gray-600">Pilih dari galeri</p>
+                                        </button>
+                                    </div>
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={handleFileUpload}
+                                        className="hidden"
+                                    />
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Camera View */}
+                        {mode === 'camera' && isCameraActive && !image && (
+                            <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
+                                <div className="relative bg-black" style={{ minHeight: '400px' }}>
+                                    <video
+                                        ref={videoRef}
+                                        autoPlay
+                                        playsInline
+                                        muted
+                                        style={{ width: '100%', height: 'auto', maxHeight: '600px', display: 'block' }}
+                                    />
+                                    <div className="absolute inset-0 border-4 border-emerald-500 pointer-events-none">
+                                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 border-2 border-dashed border-white rounded-lg"></div>
+                                    </div>
+                                </div>
+                                <div className="p-6 bg-gray-50 flex justify-center gap-4">
+                                    <button
+                                        onClick={capturePhoto}
+                                        className="px-8 py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all flex items-center gap-2"
+                                    >
+                                        <Camera className="w-5 h-5" />
+                                        Ambil Foto
+                                    </button>
+                                    <button
+                                        onClick={stopCamera}
+                                        className="px-8 py-3 bg-gray-200 text-gray-700 rounded-xl font-semibold hover:bg-gray-300 transition-all"
+                                    >
+                                        Batal
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        <canvas ref={canvasRef} className="hidden" />
+
+                        {/* Image Preview & Results */}
+                        {image && (
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                {/* Image Display */}
+                                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                                    <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4 flex justify-between items-center">
+                                        <h3 className="text-white font-semibold text-lg">Gambar yang Diambil</h3>
+                                        <button
+                                            onClick={reset}
+                                            className="text-white hover:bg-white/20 rounded-lg p-2 transition-all"
+                                        >
+                                            <X className="w-5 h-5" />
+                                        </button>
+                                    </div>
+                                    <div className="p-4">
+                                        <img src={image} alt="Captured" className="w-full rounded-xl shadow-md" />
+                                    </div>
+                                </div>
+
+                                {/* Results Display */}
+                                <div className="bg-white rounded-2xl shadow-xl overflow-hidden">
+                                    <div className="bg-gradient-to-r from-emerald-600 to-teal-600 p-4">
+                                        <h3 className="text-white font-semibold text-lg">Hasil Klasifikasi</h3>
+                                    </div>
+                                    
+                                    <div className="p-6">
+                                        {isProcessing && (
+                                            <div className="flex flex-col items-center justify-center py-12">
+                                                <div className="relative w-20 h-20 mb-4">
+                                                    <div className="absolute inset-0 border-4 border-emerald-200 rounded-full"></div>
+                                                    <div className="absolute inset-0 border-4 border-emerald-600 rounded-full border-t-transparent animate-spin"></div>
+                                                </div>
+                                                <p className="text-gray-600 font-medium">Menganalisis jenis plastik...</p>
+                                            </div>
+                                        )}
+
+                                        {prediction && !isProcessing && (
+                                            <div className="space-y-6">
+                                                {/* Plastic Type */}
+                                                <div className="text-center pb-6 border-b border-gray-200">
+                                                    <div className="inline-block bg-gradient-to-r from-emerald-600 to-teal-600 text-white px-6 py-3 rounded-2xl mb-3">
+                                                        <div className="text-3xl font-bold">{prediction.label}</div>
+                                                    </div>
+                                                    <div className="flex items-center justify-center gap-2 text-gray-600 mb-4">
+                                                        <Zap className="w-5 h-5 text-yellow-500" />
+                                                        <span className="font-semibold">Confidence: {(prediction.confidence * 100).toFixed(1)}%</span>
+                                                    </div>
+                                                    <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                                                        <div
+                                                            className="bg-gradient-to-r from-emerald-500 to-teal-500 h-full rounded-full transition-all duration-1000"
+                                                            style={{ width: `${prediction.confidence * 100}%` }}
+                                                        ></div>
+                                                    </div>
+                                                </div>
+
+                                                {/* Recycling Status */}
+                                                <div className="bg-gray-50 rounded-xl p-4">
+                                                    <div className="flex items-start gap-3">
+                                                        {getRecyclingStatus(prediction.label) === 'recyclable' && (
+                                                            <>
+                                                                <CheckCircle2 className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                                                                <div>
+                                                                    <h4 className="font-semibold text-green-800 mb-1">Bisa Didaur Ulang ♻️</h4>
+                                                                    <p className="text-sm text-gray-600">Plastik ini dapat didaur ulang di sebagian besar fasilitas.</p>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {getRecyclingStatus(prediction.label) === 'conditional' && (
+                                                            <>
+                                                                <AlertCircle className="w-6 h-6 text-yellow-600 flex-shrink-0 mt-1" />
+                                                                <div>
+                                                                    <h4 className="font-semibold text-yellow-800 mb-1">Tergantung Fasilitas ⚠️</h4>
+                                                                    <p className="text-sm text-gray-600">Periksa program daur ulang lokal Anda.</p>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                        {getRecyclingStatus(prediction.label) === 'difficult' && (
+                                                            <>
+                                                                <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
+                                                                <div>
+                                                                    <h4 className="font-semibold text-red-800 mb-1">Sulit Didaur Ulang ⛔</h4>
+                                                                    <p className="text-sm text-gray-600">Jarang diterima oleh fasilitas daur ulang.</p>
+                                                                </div>
+                                                            </>
+                                                        )}
+                                                    </div>
+                                                </div>
+
+                                                {/* Recommendation */}
+                                                <div className="bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-4 border border-emerald-200">
+                                                    <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-2">
+                                                        <Recycle className="w-5 h-5 text-emerald-600" />
+                                                        Rekomendasi
+                                                    </h4>
+                                                    <p className="text-gray-700 text-sm leading-relaxed">
+                                                        {prediction.recommendation}
+                                                    </p>
+                                                </div>
+
+                                                {/* Action Button */}
+                                                <button
+                                                    onClick={reset}
+                                                    className="w-full py-3 bg-gradient-to-r from-emerald-600 to-teal-600 text-white rounded-xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all"
+                                                >
+                                                    Analisis Item Lain
+                                                </button>
+                                            </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Info Section */}
+                        {!image && !isCameraActive && (
+                            <div className="mt-8 bg-white rounded-2xl shadow-xl p-6">
+                                <h3 className="text-xl font-bold text-gray-800 mb-4">Cara Kerja</h3>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                    <div className="text-center">
+                                        <div className="bg-emerald-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <span className="text-2xl font-bold text-emerald-600">1</span>
+                                        </div>
+                                        <h4 className="font-semibold mb-2">Ambil atau Upload</h4>
+                                        <p className="text-sm text-gray-600">Foto atau upload gambar plastik</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="bg-teal-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <span className="text-2xl font-bold text-teal-600">2</span>
+                                        </div>
+                                        <h4 className="font-semibold mb-2">Analisis AI</h4>
+                                        <p className="text-sm text-gray-600">AI mengidentifikasi jenis plastik</p>
+                                    </div>
+                                    <div className="text-center">
+                                        <div className="bg-cyan-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                            <span className="text-2xl font-bold text-cyan-600">3</span>
+                                        </div>
+                                        <h4 className="font-semibold mb-2">Dapatkan Rekomendasi</h4>
+                                        <p className="text-sm text-gray-600">Panduan daur ulang yang tepat</p>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<PlastiTrace />, document.getElementById('root'));
+    </script>
+</body>
+</html>
