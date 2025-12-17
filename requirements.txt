@@ -12,3 +12,4 @@ flask-cors==4.0.0
 
 # Desktop GUI
 PyQt5  # Hapus ==5.15.9 biar ambil latest binary
+PyQtWebEngine  # Optional: for embedded map widget (install if map feature needed)

@@ -6,9 +6,16 @@ import numpy as np
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                              QHBoxLayout, QLabel, QPushButton, QFrame, QProgressBar,
                              QScrollArea, QTextEdit, QGroupBox, QCheckBox, QDialog,
-                             QListWidget, QListWidgetItem, QDialogButtonBox, QComboBox)
-from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
+                             QListWidget, QListWidgetItem, QDialogButtonBox, QComboBox,
+                             QSplitter)
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer, QUrl
 from PyQt5.QtGui import QImage, QPixmap, QFont, QColor
+
+# Try to import QWebEngineView for embedded map
+
+from PyQt5.QtWebEngineWidgets import QWebEngineView
+HAS_WEB_ENGINE = True
+
 from ml.classifier import PlastiTraceClassifier
 from ml.config import RECOMMENDATION
 from ml.action_guidance import get_action_guidance
@@ -724,10 +731,24 @@ class PlastiTraceGUI(QMainWindow):
         # Update result display
         label = self.last_decision.current_label or "UNKNOWN"
         conf = self.last_decision.ema_conf
-            
-            self.result_label.setText(label.upper())
-            self.conf_bar.setValue(int(conf * 100))
-        self.conf_text.setText(f"Confidence: {conf*100:.1f}%")
+        
+        self.result_label.setText(label.upper())
+        self.conf_bar.setValue(int(conf * 100))
+        
+        # Show detailed debug info
+        if self.last_decision:
+            vote_ratio = self.last_decision.vote_ratio
+            margin = self.last_decision.mean_margin
+            fq = self.last_decision.frame_quality
+            debug_text = f"Confidence: {conf*100:.1f}% | Vote: {vote_ratio*100:.0f}% | Margin: {margin*100:.1f}%"
+            if fq:
+                if fq.is_blurry:
+                    debug_text += " | ⚠ BLURRY"
+                if fq.is_too_dark:
+                    debug_text += " | ⚠ DARK"
+            self.conf_text.setText(debug_text)
+        else:
+            self.conf_text.setText(f"Confidence: {conf*100:.1f}%")
             
         # Update status
         state = self.last_decision.state
@@ -745,8 +766,14 @@ class PlastiTraceGUI(QMainWindow):
             self.status_label.setStyleSheet(f"color: {COLORS['accent']}; font-weight: bold;")
         
         # Show/hide capture button
+        # Allow capture even if UNKNOWN or UNSTABLE (for testing/debugging)
         if state == DecisionState.LOCKED:
             self.capture_btn.show()
+            self.capture_btn.setEnabled(True)
+        elif state == DecisionState.UNKNOWN or state == DecisionState.UNSTABLE:
+            # Show but disabled, or allow capture anyway for testing
+            self.capture_btn.show()
+            self.capture_btn.setEnabled(True)  # Allow capture even when uncertain
         else:
             self.capture_btn.hide()
         
@@ -758,7 +785,7 @@ class PlastiTraceGUI(QMainWindow):
         
         # Update recommendations
         rec = RECOMMENDATION.get(label, "No recommendation available.")
-            self.rec_label.setText(rec)
+        self.rec_label.setText(rec)
 
     def update_top3_predictions(self, probs):
         """Update top-3 predictions display."""
@@ -1275,6 +1302,77 @@ Timestamp: {record.timestamp}
         
         dialog.exec_()
     
+    def _generate_map_html(self, locations, user_lat=None, user_lng=None):
+        """Generate HTML for embedded map with Leaflet.js."""
+        # Calculate center point
+        if locations:
+            avg_lat = sum(loc.lat for loc in locations) / len(locations)
+            avg_lng = sum(loc.lng for loc in locations) / len(locations)
+        else:
+            avg_lat = -6.2088  # Jakarta default
+            avg_lng = 106.8456
+        
+        # Use user location if available
+        center_lat = user_lat if user_lat else avg_lat
+        center_lng = user_lng if user_lng else avg_lng
+        
+        # Generate markers HTML
+        markers_js = ""
+        for i, loc in enumerate(locations):
+            # Escape quotes in name/address
+            name = loc.name.replace("'", "\\'").replace('"', '\\"')
+            address = loc.address.replace("'", "\\'").replace('"', '\\"')
+            markers_js += f"""
+            var marker{i} = L.marker([{loc.lat}, {loc.lng}]).addTo(map);
+            marker{i}.bindPopup('<b>{name}</b><br>{address}');
+            """
+        
+        # Add user location marker if available
+        user_marker_js = ""
+        if user_lat and user_lng:
+            user_marker_js = f"""
+            var userMarker = L.marker([{user_lat}, {user_lng}], {{
+                icon: L.icon({{
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34]
+                }})
+            }}).addTo(map);
+            userMarker.bindPopup('<b>Your Location</b>');
+            """
+        
+        html = f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+            <style>
+                body {{ margin: 0; padding: 0; }}
+                #map {{ height: 100vh; width: 100%; }}
+            </style>
+        </head>
+        <body>
+            <div id="map"></div>
+            <script>
+                var map = L.map('map').setView([{center_lat}, {center_lng}], 13);
+                
+                L.tileLayer('https://{{s}}.tile.openstreetmap.org/{{z}}/{{x}}/{{y}}.png', {{
+                    attribution: '© OpenStreetMap contributors',
+                    maxZoom: 19
+                }}).addTo(map);
+                
+                {user_marker_js}
+                {markers_js}
+            </script>
+        </body>
+        </html>
+        """
+        return html
+    
     def show_dropoff_map(self):
         """Show drop-off locations map/list."""
         if not hasattr(self, 'current_recommendation') or not hasattr(self, 'current_plastic_type'):
@@ -1289,7 +1387,7 @@ Timestamp: {record.timestamp}
         
         dialog = QDialog(self)
         dialog.setWindowTitle("Drop-off Locations")
-        dialog.setMinimumSize(600, 500)
+        dialog.setMinimumSize(900, 700)
         dialog.setStyleSheet(f"background-color: {COLORS['bg_dark']};")
         layout = QVBoxLayout(dialog)
         
@@ -1324,8 +1422,16 @@ Timestamp: {record.timestamp}
             user_lng=None
         )
         
-        # Filter out excluded locations
-        ranked = [r for r in ranked if not r.excluded]
+        # Filter out excluded locations, but for UNKNOWN show GENERAL/MIXED locations
+        if self.current_plastic_type == "UNKNOWN":
+            # Show all locations that accept GENERAL or MIXED, even if excluded
+            ranked = [r for r in ranked if (
+                not r.excluded or 
+                "GENERAL" in r.location.accepted_types or 
+                "MIXED" in r.location.accepted_types
+            )]
+        else:
+            ranked = [r for r in ranked if not r.excluded]
         
         if not ranked:
             # No locations found
@@ -1354,7 +1460,26 @@ Timestamp: {record.timestamp}
             search_btn.clicked.connect(open_search)
             layout.addWidget(search_btn)
         else:
-            # List widget
+            # Create splitter for map and list
+            splitter = QSplitter(Qt.Horizontal)
+            splitter.setStyleSheet(f"background-color: {COLORS['bg_dark']};")
+            
+            # Map widget (left side)
+            if HAS_WEB_ENGINE:
+                map_widget = QWebEngineView()
+                locations_for_map = [r.location for r in ranked[:20]]  # Show top 20 on map
+                map_html = self._generate_map_html(locations_for_map)
+                map_widget.setHtml(map_html)
+                map_widget.setMinimumSize(400, 400)
+                splitter.addWidget(map_widget)
+            else:
+                # Fallback: show message if QWebEngineView not available
+                map_placeholder = QLabel("Map widget requires PyQt5.QtWebEngineWidgets\n\nInstall with: pip install PyQtWebEngine")
+                map_placeholder.setStyleSheet(f"color: {COLORS['text_dim']}; padding: 20px;")
+                map_placeholder.setAlignment(Qt.AlignCenter)
+                splitter.addWidget(map_placeholder)
+            
+            # List widget (right side)
             list_widget = QListWidget()
             list_widget.setStyleSheet(f"""
                 QListWidget {{
@@ -1367,8 +1492,9 @@ Timestamp: {record.timestamp}
                     border-bottom: 1px solid {COLORS['bg_dark']};
                 }}
             """)
+            list_widget.setMinimumWidth(300)
             
-            for ranked_loc in ranked[:10]:  # Show top 10
+            for ranked_loc in ranked[:10]:  # Show top 10 in list
                 loc = ranked_loc.location
                 item_text = f"{loc.name}\n{loc.address}"
                 if ranked_loc.distance is not None:
@@ -1379,10 +1505,18 @@ Timestamp: {record.timestamp}
                 item.setData(Qt.UserRole, loc.id)
                 list_widget.addItem(item)
             
-            layout.addWidget(list_widget)
+            splitter.addWidget(list_widget)
+            
+            # Set splitter proportions (60% map, 40% list)
+            splitter.setSizes([600, 300])
+            
+            layout.addWidget(splitter)
+            
+            # Button row
+            button_layout = QHBoxLayout()
             
             # Open in Maps button
-            open_maps_btn = QPushButton("🗺️ Open in Maps")
+            open_maps_btn = QPushButton("🗺️ Open Selected in Maps")
             open_maps_btn.setStyleSheet(f"""
                 QPushButton {{
                     background-color: {COLORS['accent']};
@@ -1414,7 +1548,11 @@ Timestamp: {record.timestamp}
                             )
             
             open_maps_btn.clicked.connect(open_in_maps)
-            layout.addWidget(open_maps_btn)
+            button_layout.addWidget(open_maps_btn)
+            
+            button_layout.addStretch()
+            
+            layout.addLayout(button_layout)
         
         # Close button
         close_btn = QPushButton("Close")

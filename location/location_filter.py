@@ -51,7 +51,12 @@ class LocationFilterRanker:
         
         for location in locations:
             # Check if location accepts the type
-            accepts = location.accepts_type(plastic_type, recommendation.eligible_dropoff_tags)
+            # If plastic_type is UNKNOWN, show GENERAL locations
+            if plastic_type == "UNKNOWN":
+                # For UNKNOWN, show locations that accept GENERAL or MIXED
+                accepts = location.accepts_type("GENERAL", ["GENERAL", "MIXED"]) or location.accepts_type("MIXED", ["GENERAL", "MIXED"])
+            else:
+                accepts = location.accepts_type(plastic_type, recommendation.eligible_dropoff_tags)
             
             if not accepts:
                 # Exclude if doesn't accept type
@@ -59,7 +64,7 @@ class LocationFilterRanker:
                     location=location,
                     distance=self._calculate_distance(user_lat, user_lng, location.lat, location.lng) if user_lat and user_lng else None,
                     rank_score=0.0,
-                    reason=f"Does not accept {plastic_type}",
+                    reason=f"Does not accept {plastic_type}" if plastic_type != "UNKNOWN" else "Does not accept general/mixed plastics",
                     excluded=True
                 ))
                 continue
