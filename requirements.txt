@@ -2,7 +2,8 @@
 torch
 torchvision
 opencv-contrib-python
-numpy
+numpy>=2.3.5  # Python 3.14 requires numpy 2.3.5+ (pre-built wheels)
+              # Note: opencv-contrib-python may show dependency conflict but works fine
 Pillow
 
 # Web API & Server
