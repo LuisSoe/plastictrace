@@ -1,40 +1,92 @@
 """
 Map widget for displaying nearby waste disposal/recycling locations.
 """
+import math
+import random
+import os
+import pandas as pd
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem
 from PyQt5.QtGui import QPainter, QColor, QFont, QPen, QBrush
 from PyQt5.QtCore import Qt, QRect, QPoint
 from ml.config import CLASSES
 
-
-# Sample location data (in real app, this could come from a database or API)
-# Format: {category: [(name, address, lat, lon, distance_km), ...]}
-SAMPLE_LOCATIONS = {
-    "HDPE": [
-        ("Bank Sampah Jakarta Selatan", "Jl. Kebayoran Baru, Jakarta Selatan", -6.2297, 106.7997, 2.5),
-        ("TPS 3R Cilandak", "Jl. Cilandak KKO, Jakarta Selatan", -6.2892, 106.8000, 3.2),
-        ("Bank Sampah Kemang", "Jl. Kemang Raya, Jakarta Selatan", -6.2600, 106.8100, 4.1),
-    ],
-    "PET": [
-        ("Bank Sampah Jakarta Selatan", "Jl. Kebayoran Baru, Jakarta Selatan", -6.2297, 106.7997, 2.5),
-        ("TPS 3R Cilandak", "Jl. Cilandak KKO, Jakarta Selatan", -6.2892, 106.8000, 3.2),
-        ("Recycling Center Senayan", "Jl. Asia Afrika, Jakarta Pusat", -6.2275, 106.8000, 5.0),
-    ],
-    "PP": [
-        ("Bank Sampah Jakarta Selatan", "Jl. Kebayoran Baru, Jakarta Selatan", -6.2297, 106.7997, 2.5),
-        ("TPS 3R Cilandak", "Jl. Cilandak KKO, Jakarta Selatan", -6.2892, 106.8000, 3.2),
-        ("Waste Management Center", "Jl. Sudirman, Jakarta Pusat", -6.2088, 106.8000, 6.5),
-    ],
-    "PS": [
-        ("TPS Residu Jakarta Selatan", "Jl. Fatmawati, Jakarta Selatan", -6.2800, 106.7900, 3.8),
-        ("Landfill Bantar Gebang", "Bekasi, Jawa Barat", -6.3000, 107.0000, 25.0),
-        ("Waste Processing Facility", "Jl. Ciputat Raya, Jakarta Selatan", -6.3100, 106.7500, 7.2),
-    ],
-}
-
 # Default location (user's location - could be from GPS)
 DEFAULT_LAT = -6.2297  # Jakarta Selatan
 DEFAULT_LON = 106.7997
+
+def load_locations_from_xlsx(file_path='jakarta.xlsx'):
+    """
+    Load location data from Excel file and randomize coordinates across Jakarta.
+    Assigns random plastic categories (HDPE, PET, PP, PS) using a fixed seed.
+    """
+    if not os.path.exists(file_path):
+        print(f"Warning: {file_path} not found. Using empty locations.")
+        return {cat: [] for cat in ["HDPE", "PET", "PP", "PS"]}
+
+    try:
+        # Use openpyxl engine specifically for .xlsx files
+        df_raw = pd.read_excel(file_path, header=None, engine='openpyxl')
+        
+        # Find header row (containing 'Nama')
+        header_row = -1
+        for i, row in df_raw.iterrows():
+            if any('Nama' in str(val) for val in row.values):
+                header_row = i
+                break
+        
+        if header_row == -1:
+            print("Warning: Could not find header row in Excel. Using empty locations.")
+            return {cat: [] for cat in ["HDPE", "PET", "PP", "PS"]}
+            
+        # Set columns and cleanup
+        df = df_raw.iloc[header_row+1:].copy()
+        df.columns = df_raw.iloc[header_row]
+        df = df.dropna(subset=['Nama Fasilitas'])
+        
+        # Random seed for reproducibility as requested
+        random.seed(42)
+        
+        categories = ["HDPE", "PET", "PP", "PS"]
+        locations = {cat: [] for cat in categories}
+        
+        # Jakarta bounds (approximate)
+        MIN_LAT, MAX_LAT = -6.37, -6.08
+        MIN_LON, MAX_LON = 106.65, 106.95
+        
+        # Limit to first 100 locations to keep UI responsive
+        for _, row in df.head(100).iterrows():
+            name = str(row['Nama Fasilitas']).strip()
+            if not name or name == 'nan':
+                continue
+                
+            # Build address string
+            addr_parts = []
+            for col in ['Alamat', 'Kecamatan', 'Kabupaten/Kota']:
+                if col in df.columns and pd.notna(row[col]):
+                    addr_parts.append(str(row[col]))
+            address = ", ".join(addr_parts) if addr_parts else "Jakarta"
+            
+            # Random coordinates across Jakarta
+            lat = random.uniform(MIN_LAT, MAX_LAT)
+            lon = random.uniform(MIN_LON, MAX_LON)
+            
+            # Random category using the seed
+            category = random.choice(categories)
+            
+            # Calculate approximate distance (Haversine simplified)
+            dlat = (lat - DEFAULT_LAT) * 111
+            dlon = (lon - DEFAULT_LON) * 111 * math.cos(math.radians(DEFAULT_LAT))
+            distance = math.sqrt(dlat**2 + dlon**2)
+            
+            locations[category].append((name, address, lat, lon, distance))
+            
+        return locations
+    except Exception as e:
+        print(f"Error loading locations from Excel: {e}")
+        return {cat: [] for cat in ["HDPE", "PET", "PP", "PS"]}
+
+# Load locations from the Excel file
+SAMPLE_LOCATIONS = load_locations_from_xlsx()
 
 
 class MapWidget(QWidget):
