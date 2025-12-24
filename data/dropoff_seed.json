@@ -1,0 +1,92 @@
+{
+  "locations": [
+    {
+      "id": "seed_001",
+      "name": "Jakarta Recycling Center",
+      "lat": -6.2088,
+      "lng": 106.8456,
+      "address": "Jl. Sudirman, Jakarta Pusat",
+      "hours": "Mon-Sat 8:00-17:00",
+      "contact": "+62-21-12345678",
+      "source": "seed",
+      "accepted_types": [
+        "PET",
+        "HDPE",
+        "PP",
+        "GENERAL"
+      ],
+      "conditions_required": {
+        "clean": true
+      },
+      "notes": "Accepts most plastic types when clean"
+    },
+    {
+      "id": "seed_002",
+      "name": "Bekasi Drop-off Point",
+      "lat": -6.2383,
+      "lng": 106.9756,
+      "address": "Jl. Ahmad Yani, Bekasi",
+      "hours": "Mon-Fri 9:00-16:00",
+      "contact": null,
+      "source": "seed",
+      "accepted_types": [
+        "PET",
+        "HDPE",
+        "BOTTLES"
+      ],
+      "conditions_required": null,
+      "notes": "Specializes in bottles"
+    },
+    {
+      "id": "seed_003",
+      "name": "Depok Community Collection",
+      "lat": -6.4025,
+      "lng": 106.7942,
+      "address": "Jl. Margonda Raya, Depok",
+      "hours": "Sat-Sun 10:00-14:00",
+      "contact": null,
+      "source": "seed",
+      "accepted_types": [
+        "GENERAL",
+        "MIXED"
+      ],
+      "conditions_required": null,
+      "notes": "Community-run collection point"
+    },
+    {
+      "id": "seed_004",
+      "name": "Tangerang Plastic Hub",
+      "lat": -6.1781,
+      "lng": 106.63,
+      "address": "Jl. Daan Mogot, Tangerang",
+      "hours": "Daily 7:00-19:00",
+      "contact": "+62-21-87654321",
+      "source": "seed",
+      "accepted_types": [
+        "PP",
+        "HDPE",
+        "CONTAINERS"
+      ],
+      "conditions_required": {
+        "clean": true
+      },
+      "notes": "Focus on food containers"
+    },
+    {
+      "id": "seed_005",
+      "name": "South Jakarta Collection",
+      "lat": -6.2297,
+      "lng": 106.7997,
+      "address": "Jl. Fatmawati, Jakarta Selatan",
+      "hours": "Mon-Sat 8:00-18:00",
+      "contact": null,
+      "source": "seed",
+      "accepted_types": [
+        "PET",
+        "GENERAL"
+      ],
+      "conditions_required": null,
+      "notes": "General plastic collection"
+    }
+  ]
+}

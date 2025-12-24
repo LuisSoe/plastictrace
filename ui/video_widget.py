@@ -1,20 +1,20 @@
 """
-Video widget for displaying camera feed with overlays.
+VideoWidget: Displays camera feed only (no overlays - overlays in separate widget).
 """
 import cv2
 import numpy as np
-from PyQt5.QtWidgets import QWidget
+from PyQt5.QtWidgets import QWidget, QVBoxLayout
 from PyQt5.QtGui import QImage, QPainter, QPixmap
-from PyQt5.QtCore import Qt
-from ui.overlay import (
-    draw_bbox, draw_label_confidence, draw_top_panel,
-    draw_fps, draw_status
-)
-from ml.config import RECOMMENDATION
+from PyQt5.QtCore import Qt, QRect
+from ui.overlay_widget import OverlayWidget
+from domain.models import Detection
 
 
 class VideoWidget(QWidget):
-    """Widget for displaying video frames with overlays."""
+    """
+    Widget for displaying video frames only.
+    Overlays are rendered in separate OverlayWidget on top.
+    """
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -22,16 +22,18 @@ class VideoWidget(QWidget):
         # Latest data
         self.latest_frame = None  # BGR numpy array
         self.latest_bbox = None  # (x1, y1, x2, y2) in frame coordinates or None
-        self.latest_result = None  # dict with label, confidence, etc.
+        self.latest_detection: Detection = None
         self.latest_fps = 0.0
         self.tracker_active = False
-        
-        # Overlay settings
-        self.overlay_alpha = 0.6
         
         # Frame dimensions (for coordinate mapping)
         self.frame_width = 640
         self.frame_height = 480
+        
+        # Setup overlay widget
+        self.overlay_widget = OverlayWidget(self)
+        self.overlay_widget.setAttribute(Qt.WA_TransparentForMouseEvents, True)
+        self.overlay_widget.raise_()  # Ensure overlay is on top
     
     def setFrame(self, frame_bgr, fps):
         """
@@ -45,7 +47,9 @@ class VideoWidget(QWidget):
         self.latest_fps = fps
         if frame_bgr is not None and frame_bgr.size > 0:
             self.frame_height, self.frame_width = frame_bgr.shape[:2]
+            self.overlay_widget.set_frame_dimensions(self.frame_width, self.frame_height)
         self.update()  # Trigger repaint
+        self.overlay_widget.set_fps(fps)
     
     def setBBox(self, bbox_xyxy_or_none, tracker_active):
         """
@@ -58,21 +62,52 @@ class VideoWidget(QWidget):
         self.latest_bbox = bbox_xyxy_or_none
         self.tracker_active = tracker_active
         self.update()  # Trigger repaint
+        
+        # Update overlay
+        if bbox_xyxy_or_none is not None:
+            bbox_widget = self._map_bbox_to_widget(
+                bbox_xyxy_or_none, self.width(), self.height()
+            )
+            self.overlay_widget.set_bbox(bbox_widget)
+        else:
+            self.overlay_widget.set_bbox(None)
+        
+        self.overlay_widget.set_tracker_active(tracker_active)
     
-    def setResult(self, result):
+    def setResult(self, result_dict):
         """
         Update classification result.
         
         Args:
-            result: dict with label, confidence, etc.
+            result_dict: dict with label, confidence, etc.
         """
-        self.latest_result = result
+        if result_dict:
+            self.latest_detection = Detection(
+                label=result_dict.get("label", "Unknown"),
+                confidence=result_dict.get("confidence", 0.0),
+                probs=result_dict.get("probs", []),
+                raw_label=result_dict.get("raw_label", "Unknown"),
+                raw_conf=result_dict.get("raw_conf", 0.0),
+                bbox=self.latest_bbox
+            )
+        else:
+            self.latest_detection = None
+        
         self.update()  # Trigger repaint
+        self.overlay_widget.set_detection(self.latest_detection)
     
-    def setOverlayAlpha(self, alpha):
-        """Set overlay panel transparency (0-1)."""
-        self.overlay_alpha = float(alpha)
-        self.update()
+    def resizeEvent(self, event):
+        """Handle widget resize."""
+        super().resizeEvent(event)
+        # Resize overlay to match
+        self.overlay_widget.setGeometry(0, 0, self.width(), self.height())
+        self.overlay_widget.raise_()  # Ensure overlay stays on top
+        # Update bbox coordinates
+        if self.latest_bbox is not None:
+            bbox_widget = self._map_bbox_to_widget(
+                self.latest_bbox, self.width(), self.height()
+            )
+            self.overlay_widget.set_bbox(bbox_widget)
     
     def _map_bbox_to_widget(self, bbox_frame, widget_width, widget_height):
         """
@@ -111,7 +146,7 @@ class VideoWidget(QWidget):
         return (x1_w, y1_w, x2_w, y2_w)
     
     def paintEvent(self, event):
-        """Paint video frame and overlays."""
+        """Paint video frame only (no overlays)."""
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
         
@@ -124,9 +159,12 @@ class VideoWidget(QWidget):
         if self.latest_frame is None:
             # No frame: draw placeholder
             painter.setPen(Qt.white)
+            font = painter.font()
+            font.setPointSize(14)
+            painter.setFont(font)
             painter.drawText(
-                widget_width // 2 - 100,
-                widget_height // 2,
+                QRect(0, 0, widget_width, widget_height),
+                Qt.AlignCenter,
                 "No camera feed"
             )
             return
@@ -154,44 +192,4 @@ class VideoWidget(QWidget):
         pixmap_y = (widget_height - scaled_pixmap.height()) // 2
         
         painter.drawPixmap(pixmap_x, pixmap_y, scaled_pixmap)
-        
-        # Draw overlays
-        # Map bbox to widget coordinates
-        bbox_widget = self._map_bbox_to_widget(
-            self.latest_bbox, widget_width, widget_height
-        )
-        
-        # Draw bbox
-        if bbox_widget is not None:
-            draw_bbox(painter, bbox_widget)
-            
-            # Draw label + confidence near bbox
-            if self.latest_result:
-                label = self.latest_result.get("label", "Unknown")
-                confidence = self.latest_result.get("confidence", 0.0)
-                draw_label_confidence(painter, label, confidence, bbox_widget)
-        
-        # Draw top panel with recommendation
-        if self.latest_result:
-            label = self.latest_result.get("label", "")
-            if label and label != "Unknown":
-                recommendation = RECOMMENDATION.get(label, "")
-                if recommendation:
-                    draw_top_panel(
-                        painter, recommendation, widget_width,
-                        alpha=self.overlay_alpha, max_lines=3
-                    )
-        
-        # Draw FPS (yellow, top-right)
-        draw_fps(painter, self.latest_fps, widget_width, widget_height)
-        
-        # Draw status (cyan, bottom-left)
-        draw_status(
-            painter,
-            bbox_exists=(self.latest_bbox is not None),
-            result_exists=(self.latest_result is not None),
-            tracker_active=self.tracker_active,
-            widget_width=widget_width,
-            widget_height=widget_height
-        )
 

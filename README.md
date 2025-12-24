@@ -8,6 +8,8 @@ Aplikasi desktop Python untuk deteksi jenis plastik secara realtime dari webcam 
 ```bash
 # Create virtual environment
 python3 -m venv venv
+#ensure u use python 3.14 to avoid error 
+#and make sure u have the c++ or c compiler installed for numpy 
 
 # Activate virtual environment
 # On macOS/Linux:
