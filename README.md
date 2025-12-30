@@ -355,6 +355,42 @@ Aplikasi menampilkan rekomendasi daur ulang dalam Bahasa Indonesia:
 - **Desktop Users**: Use `app_gui.py` (PyQt5 GUI) - **RECOMMENDED**
 - **Web/Mobile Access**: Use Web App (`api.py` + `web/index.html`)
 
+## Location Data & Geocoding
+
+### Loading Locations
+
+The application loads location data from Bank Sampah (waste bank) facilities across Indonesia:
+
+1. **Primary Source**: `data_sipsn.xlsx` - Excel file with location data from SIPSN (Sistem Informasi Pengelolaan Sampah Nasional)
+
+2. **Cache File**: `data/locations_geocoded.json` - Pre-geocoded locations with coordinates (200 locations)
+
+3. **Geocoding**: Addresses from the "Alamat" field are geocoded to get accurate latitude/longitude coordinates
+
+### Setting Up Location Data
+
+**Option 1: Use Pre-geocoded Cache (Recommended)**
+- The app automatically uses `data/locations_geocoded.json` if available
+- Fast loading, no geocoding needed
+- Already includes 200 locations with coordinates
+
+**Option 2: Geocode from Excel**
+- Run the geocoding script once to create the cache:
+```bash
+python location/geocode_all.py
+```
+- This will geocode all locations from `data_sipsn.xlsx` and save to `data/locations_geocoded.json`
+- Takes ~3-4 minutes for 200 locations (1 second per location due to rate limiting)
+
+### Map Features
+
+- **200+ Locations**: Shows all Bank Sampah locations across Indonesia
+- **Coverage**: Entire Indonesia (radius up to 4000km, covers Jakarta to Ambon and beyond)
+- **Interactive Map**: Click markers to see details, navigate to Google Maps
+- **Filtering**: Filter by plastic type (PET, HDPE, PP, PS)
+- **Distance**: Shows distance from user location to each facility
+- **Marker Clustering**: Groups nearby markers for better performance
+
 ## Production Deployment
 
 ### Desktop App
