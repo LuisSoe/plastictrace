@@ -445,7 +445,17 @@ For production deployment:
 
 ## Changelog
 
-### v2.0 (Latest)
+### v2.1 (Latest)
+
+- 🗺️ Added interactive map with 200+ Bank Sampah locations across Indonesia
+- 📍 Geocoding support to convert addresses to coordinates
+- 💾 Location cache system for fast loading
+- 🎯 Shows all locations on map with distance calculation
+- 🔍 Location filtering by plastic type
+- 🧭 Navigation integration with Google Maps
+- 🌏 Coverage for entire Indonesia (up to 4000km radius)
+
+### v2.0
 
 - ✨ Added PyQt5 GUI desktop application (`app_gui.py`)
 - 🌐 Added web interface with React UI
