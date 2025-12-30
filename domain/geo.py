@@ -35,19 +35,21 @@ def filter_locations(
     user_lat: float,
     user_lon: float,
     radius_km: float,
-    types_selected: List[str]
+    types_selected: List[str],
+    max_results: int = None
 ) -> List[Location]:
     """
-    Filter locations by radius and accepted types.
+    Filter locations by radius and accepted types, return nearest locations.
     
     Args:
         locations: List of locations
         user_lat, user_lon: User's location
-        radius_km: Search radius in kilometers
+        radius_km: Search radius in kilometers (use None or very large value for no radius limit)
         types_selected: List of plastic types to filter by
+        max_results: Maximum number of results to return (None for all)
     
     Returns:
-        Filtered and sorted list of locations (by distance)
+        Filtered and sorted list of locations (by distance), limited to max_results
     """
     filtered = []
     
@@ -60,14 +62,18 @@ def filter_locations(
         
         # Calculate distance
         distance = haversine_distance(user_lat, user_lon, loc.lat, loc.lon)
+        loc.distance_km = distance
         
-        # Filter by radius
-        if distance <= radius_km:
-            loc.distance_km = distance
+        # Filter by radius (if radius_km is None or very large, don't filter)
+        if radius_km is None or radius_km >= 10000 or distance <= radius_km:
             filtered.append(loc)
     
     # Sort by distance
     filtered.sort(key=lambda x: x.distance_km or float('inf'))
+    
+    # Limit to max_results nearest locations
+    if max_results is not None and max_results > 0:
+        filtered = filtered[:max_results]
     
     return filtered
 

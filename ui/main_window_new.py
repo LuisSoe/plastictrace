@@ -18,6 +18,7 @@ from workers.inference_worker import InferenceWorker
 from ui.map_view import MapView
 from ml.classifier import PlastiTraceClassifier
 from location.dropoff_store import DropOffStore
+from location.excel_loader import load_locations_from_sipsn
 from domain.models import Location
 from domain.geo import filter_locations
 
@@ -36,6 +37,7 @@ class MainWindow(QMainWindow):
         
         # Location store
         self.location_store = DropOffStore()
+        # Load locations from data_sipsn.xlsx
         self.all_locations = self._load_locations()
         
         # State
@@ -47,7 +49,22 @@ class MainWindow(QMainWindow):
         self.setup_ui()
     
     def _load_locations(self) -> list[Location]:
-        """Load locations from store."""
+        """Load locations from cache file (preferred) or Excel file (fallback)."""
+        from location.excel_loader import load_locations_from_cache
+        
+        # Try to load from cache file first (fast, no geocoding needed)
+        cached_locations = load_locations_from_cache("data/locations_geocoded.json")
+        if cached_locations:
+            return cached_locations
+        
+        # Fallback: Load from Excel file (slower, requires geocoding)
+        print("Cache file not found, loading from Excel file...")
+        excel_locations = load_locations_from_sipsn("data_sipsn.xlsx", enable_geocoding=False, max_locations=200)
+        if excel_locations:
+            return excel_locations
+        
+        # Final fallback: Use seed data from store
+        print("Warning: Could not load from cache or Excel, falling back to seed data.")
         dropoff_locs = self.location_store.get_all_locations()
         locations = []
         for loc in dropoff_locs:

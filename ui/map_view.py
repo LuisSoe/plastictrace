@@ -8,6 +8,14 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QUrl, QTimer, QSettings, Qt
 from PyQt5.QtGui import QDesktopServices
+
+# Try to import location services
+try:
+    from PyQt5.QtPositioning import QGeoPositionInfoSource, QGeoPositionInfo, QGeoCoordinate
+    LOCATION_AVAILABLE = True
+except ImportError:
+    LOCATION_AVAILABLE = False
+    print("Warning: QtLocation not available. GPS features will be disabled.")
 from domain.models import Location
 from domain.geo import filter_locations, haversine_distance
 from ml.config import CLASSES
@@ -17,6 +25,7 @@ class MapBridge(QObject):
     """Bridge object for QWebChannel communication."""
     
     markerClicked = pyqtSignal(str)  # location id
+    userLocationFromBrowser = pyqtSignal(float, float)  # lat, lon
     
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -36,6 +45,11 @@ class MapBridge(QObject):
     def onMarkerClicked(self, location_id: str):
         """Handle marker click."""
         self.markerClicked.emit(location_id)
+    
+    @pyqtSlot(float, float)
+    def setUserLocationFromBrowser(self, lat: float, lon: float):
+        """Set user location from browser geolocation."""
+        self.userLocationFromBrowser.emit(lat, lon)
 
 
 class MaterialChip(QPushButton):
@@ -175,15 +189,37 @@ class MapView(QWidget):
         self.locations: list[Location] = []
         self.filtered_locations: list[Location] = []
         self.selected_types: set[str] = set()
+        self.auto_follow = False  # Auto-follow user location
         
         # Map bridge
         self.map_bridge = MapBridge(self)
         self.map_bridge.markerClicked.connect(self.on_marker_clicked)
+        self.map_bridge.userLocationFromBrowser.connect(self.set_user_location_from_browser)
         
         # Debounce timer
         self.search_timer = QTimer()
         self.search_timer.setSingleShot(True)
         self.search_timer.timeout.connect(self._apply_search)
+        
+        # GPS location source
+        self.position_source = None
+        if LOCATION_AVAILABLE:
+            try:
+                # Check if any GPS sources are available before creating one
+                # This avoids the "No known GPS device found" warning
+                available_sources = QGeoPositionInfoSource.availableSources()
+                if available_sources:
+                    self.position_source = QGeoPositionInfoSource.createDefaultSource(self)
+                    if self.position_source:
+                        self.position_source.positionUpdated.connect(self._on_position_updated)
+                        self.position_source.error.connect(self._on_position_error)
+                        # Update every 5 seconds when active
+                        self.position_source.setUpdateInterval(5000)
+                # If no GPS sources available, position_source remains None
+                # Browser geolocation will be used as fallback
+            except Exception as e:
+                # Silently fail - browser geolocation will be used as fallback
+                self.position_source = None
         
         self.setup_ui()
         self._load_settings()
@@ -215,10 +251,11 @@ class MapView(QWidget):
         search_layout.addWidget(self.search_input)
         
         # Use current location button
-        use_location_btn = QPushButton("📍")
-        use_location_btn.setToolTip("Gunakan lokasi saat ini")
-        use_location_btn.setFixedSize(40, 40)
-        use_location_btn.setStyleSheet("""
+        self.use_location_btn = QPushButton("📍")
+        self.use_location_btn.setToolTip("Gunakan lokasi saat ini")
+        self.use_location_btn.setFixedSize(40, 40)
+        self.use_location_btn.setCheckable(True)
+        self.use_location_btn.setStyleSheet("""
             QPushButton {
                 background-color: #334155;
                 color: #f8fafc;
@@ -228,25 +265,35 @@ class MapView(QWidget):
             QPushButton:hover {
                 background-color: #475569;
             }
+            QPushButton:checked {
+                background-color: #10b981;
+                border-color: #10b981;
+            }
         """)
-        use_location_btn.clicked.connect(self._use_current_location)
-        search_layout.addWidget(use_location_btn)
+        self.use_location_btn.clicked.connect(self._toggle_location_follow)
+        search_layout.addWidget(self.use_location_btn)
         
         layout.addLayout(search_layout)
         
-        # Radius slider
+        # Radius slider - covers entire Indonesia (Jakarta to Ambon ~2500km)
         radius_layout = QHBoxLayout()
-        radius_layout.addWidget(QLabel("Radius:"))
+        radius_layout.addWidget(QLabel("Max Distance:"))
         self.radius_slider = QSlider(Qt.Horizontal)
         self.radius_slider.setMinimum(1)
-        self.radius_slider.setMaximum(20)
-        self.radius_slider.setValue(int(self.settings.value("radius_km", 5)))
+        self.radius_slider.setMaximum(4000)  # Covers entire Indonesia (Jakarta to Merauke ~3700km, Ambon ~2500km)
+        # Default to 4000km to cover all Indonesia including easternmost points
+        default_radius = int(self.settings.value("radius_km", 4000))
+        self.radius_slider.setValue(default_radius)
         self.radius_slider.valueChanged.connect(self._on_radius_changed)
         radius_layout.addWidget(self.radius_slider)
         
         self.radius_label = QLabel(f"{self.radius_slider.value()} km")
-        self.radius_label.setStyleSheet("color: #f8fafc; font-weight: bold; min-width: 50px;")
+        self.radius_label.setStyleSheet("color: #f8fafc; font-weight: bold; min-width: 80px;")
         radius_layout.addWidget(self.radius_label)
+        
+        info_label = QLabel("(Showing all locations)")
+        info_label.setStyleSheet("color: #94a3b8; font-size: 10px;")
+        radius_layout.addWidget(info_label)
         
         layout.addLayout(radius_layout)
         
@@ -306,10 +353,20 @@ class MapView(QWidget):
     def _on_map_loaded(self, success: bool):
         """Handle map page load."""
         if success:
-            # Set user location
-            self.map_web.page().runJavaScript(
-                f"bridge.setUserLocation({self.user_lat}, {self.user_lon});"
-            )
+            # Set user location (wait a bit for bridge to initialize)
+            js_code = f"""
+            setTimeout(function() {{
+                if (typeof window.bridge !== 'undefined' && window.bridge && window.bridge.setUserLocation) {{
+                    window.bridge.setUserLocation({self.user_lat}, {self.user_lon});
+                }}
+            }}, 100);
+            """
+            self.map_web.page().runJavaScript(js_code)
+            
+            # Update map with locations if they were set before map loaded
+            if self.locations:
+                # Wait a bit more for bridge to be fully ready
+                QTimer.singleShot(200, self._update_map)
     
     def set_user_location(self, lat: float, lon: float):
         """Set user's current location."""
@@ -319,14 +376,30 @@ class MapView(QWidget):
         self.settings.setValue("user_lon", lon)
         
         if self.map_web.page():
-            self.map_web.page().runJavaScript(
-                f"bridge.setUserLocation({lat}, {lon});"
-            )
+            js_code = f"""
+            if (typeof window.bridge !== 'undefined' && window.bridge && window.bridge.setUserLocation) {{
+                window.bridge.setUserLocation({lat}, {lon});
+            }}
+            """
+            self.map_web.page().runJavaScript(js_code)
         self._update_map()
+    
+    def set_user_location_from_browser(self, lat: float, lon: float):
+        """Set user location from browser geolocation (called via signal)."""
+        self.set_user_location(lat, lon)
+        # If auto-follow is enabled, center map on user location
+        if self.auto_follow and self.map_web.page():
+            js_code = f"""
+            if (typeof window.bridge !== 'undefined' && window.bridge && window.bridge.centerOnUser) {{
+                window.bridge.centerOnUser({lat}, {lon});
+            }}
+            """
+            self.map_web.page().runJavaScript(js_code)
     
     def set_locations(self, locations: list[Location]):
         """Set locations to display."""
         self.locations = locations
+        print(f"MapView: Set {len(locations)} locations")
         self._update_map()
     
     def set_selected_plastic_type(self, plastic_type: str):
@@ -349,29 +422,91 @@ class MapView(QWidget):
         types_list = list(self.selected_types) if self.selected_types else []
         radius = self.radius_slider.value()
         
+        # Show ALL locations within radius (no limit)
+        # With radius set to 4000km (covers all Indonesia), this will show all locations from anywhere in Indonesia
         self.filtered_locations = filter_locations(
             self.locations,
             self.user_lat,
             self.user_lon,
-            radius,
-            types_list
+            radius_km=radius,  # Use the radius value (default 4000km covers all Indonesia)
+            types_selected=types_list,
+            max_results=None  # Show all locations, no limit
         )
         
-        # Clear map
-        if self.map_web.page():
-            self.map_web.page().runJavaScript("bridge.clearMarkers();")
+        if self.filtered_locations:
+            max_dist = max(loc.distance_km or 0 for loc in self.filtered_locations)
+            print(f"MapView: Showing {len(self.filtered_locations)} locations (max distance: {max_dist:.1f}km, types={types_list})")
+        else:
+            print(f"MapView: No locations found (types={types_list})")
         
-        # Add markers
+        if not self.map_web.page():
+            # Map not ready yet, will be called again when map loads
+            print("MapView: Map page not ready, will update when loaded")
+            return
+        
+        # Build locations data as JSON (safer than string concatenation)
+        import json
+        locations_data = []
         for loc in self.filtered_locations:
-            if self.map_web.page():
-                self.map_web.page().runJavaScript(
-                    f"bridge.addLocation('{loc.id}', '{loc.name}', {loc.lat}, {loc.lon}, "
-                    f"'{loc.address}', {loc.distance_km or 0}, {loc.types});"
-                )
+            locations_data.append({
+                'id': loc.id,
+                'name': loc.name,
+                'lat': loc.lat,
+                'lon': loc.lon,
+                'address': loc.address,
+                'distance': loc.distance_km or 0,
+                'types': loc.types
+            })
         
-        # Fit bounds
-        if self.map_web.page() and self.filtered_locations:
-            self.map_web.page().runJavaScript("bridge.fitBounds();")
+        # Convert to JSON string (properly escaped)
+        locations_json = json.dumps(locations_data)
+        
+        # Single JavaScript call to add all markers
+        js_code = f"""
+        (function() {{
+            if (typeof window.bridge === 'undefined' || !window.bridge) {{
+                console.log('Bridge not ready, retrying in 100ms...');
+                setTimeout(arguments.callee, 100);
+                return;
+            }}
+            
+            // Clear existing markers
+            if (window.bridge.clearMarkers) {{
+                window.bridge.clearMarkers();
+            }}
+            
+            // Parse locations from JSON
+            var locations = {locations_json};
+            
+            // Add all locations
+            console.log('Starting to add', locations.length, 'locations to map');
+            var addedCount = 0;
+            for (var i = 0; i < locations.length; i++) {{
+                var loc = locations[i];
+                try {{
+                    if (window.bridge.addLocation) {{
+                        window.bridge.addLocation(loc.id, loc.name, loc.lat, loc.lon, loc.address, loc.distance, loc.types);
+                        addedCount++;
+                    }} else {{
+                        console.error('window.bridge.addLocation is not available');
+                    }}
+                }} catch(e) {{
+                    console.error('Error adding location:', e, loc);
+                }}
+            }}
+            
+            console.log('Successfully added', addedCount, 'out of', locations.length, 'locations');
+            
+            // Fit bounds if there are locations
+            if (locations.length > 0 && window.bridge.fitBounds) {{
+                setTimeout(function() {{
+                    window.bridge.fitBounds();
+                    console.log('Fitted bounds to show all markers');
+                }}, 100);
+            }}
+        }})();
+        """
+        self.map_web.page().runJavaScript(js_code)
         
         # Update list
         self._update_list()
@@ -386,7 +521,7 @@ class MapView(QWidget):
         
         if not self.filtered_locations:
             # Empty state
-            empty_label = QLabel("Tidak ada lokasi ditemukan dalam radius yang dipilih.")
+            empty_label = QLabel("Tidak ada lokasi ditemukan.")
             empty_label.setStyleSheet("color: #64748b; font-size: 12px; padding: 20px;")
             empty_label.setAlignment(2)  # Qt.AlignCenter
             self.list_layout.addWidget(empty_label)
@@ -432,10 +567,130 @@ class MapView(QWidget):
                 self.selected_types.discard(chip_type)
             self._update_map()
     
-    def _use_current_location(self):
-        """Use current location (placeholder - would use GPS)."""
-        # TODO: Implement GPS location
-        pass
+    def _toggle_location_follow(self, checked: bool):
+        """Toggle auto-follow location mode."""
+        self.auto_follow = checked
+        
+        if checked:
+            # Start location updates
+            if self.position_source:
+                try:
+                    self.position_source.startUpdates()
+                    self.use_location_btn.setToolTip("Mengikuti lokasi Anda (klik untuk berhenti)")
+                except Exception as e:
+                    print(f"Error starting location updates: {e}")
+                    self.use_location_btn.setChecked(False)
+                    self.auto_follow = False
+            else:
+                # Fallback: use browser geolocation with watch
+                self._request_browser_location(watch=True)
+                self.use_location_btn.setToolTip("Mengikuti lokasi Anda (klik untuk berhenti)")
+        else:
+            # Stop location updates
+            if self.position_source:
+                self.position_source.stopUpdates()
+            else:
+                # Stop browser location watch
+                self._stop_browser_location_watch()
+            self.use_location_btn.setToolTip("Gunakan lokasi saat ini")
+    
+    def _request_browser_location(self, watch=False):
+        """Request location from browser (fallback if Qt location not available)."""
+        if self.map_web.page():
+            if watch:
+                # Watch position for continuous updates
+                js_code = """
+                if (navigator.geolocation) {
+                    if (window.watchId) {
+                        navigator.geolocation.clearWatch(window.watchId);
+                    }
+                    window.watchId = navigator.geolocation.watchPosition(
+                        function(position) {
+                            if (window.bridge && window.bridge.setUserLocationFromBrowser) {
+                                window.bridge.setUserLocationFromBrowser(position.coords.latitude, position.coords.longitude);
+                            }
+                            if (window.bridge && window.bridge.centerOnUser) {
+                                window.bridge.centerOnUser(position.coords.latitude, position.coords.longitude);
+                            }
+                        },
+                        function(error) {
+                            console.error('Geolocation error:', error);
+                            if (error.code === 1) {
+                                alert('Akses lokasi ditolak. Pastikan izin lokasi diberikan di pengaturan browser.');
+                            }
+                        },
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000,
+                            maximumAge: 5000
+                        }
+                    );
+                } else {
+                    alert('Browser tidak mendukung geolocation.');
+                }
+                """
+            else:
+                # One-time position request
+                js_code = """
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        function(position) {
+                            if (window.bridge && window.bridge.setUserLocationFromBrowser) {
+                                window.bridge.setUserLocationFromBrowser(position.coords.latitude, position.coords.longitude);
+                            }
+                        },
+                        function(error) {
+                            console.error('Geolocation error:', error);
+                            alert('Tidak dapat mengakses lokasi. Pastikan izin lokasi diberikan.');
+                        }
+                    );
+                } else {
+                    alert('Browser tidak mendukung geolocation.');
+                }
+                """
+            self.map_web.page().runJavaScript(js_code)
+    
+    def _stop_browser_location_watch(self):
+        """Stop watching browser location."""
+        if self.map_web.page():
+            js_code = """
+            if (window.watchId) {
+                navigator.geolocation.clearWatch(window.watchId);
+                window.watchId = null;
+            }
+            """
+            self.map_web.page().runJavaScript(js_code)
+    
+    def _on_position_updated(self, position: 'QGeoPositionInfo'):
+        """Handle GPS position update."""
+        if position.isValid():
+            coord = position.coordinate()
+            if coord.isValid():
+                lat = coord.latitude()
+                lon = coord.longitude()
+                self.set_user_location(lat, lon)
+                
+                # Center map on user location if auto-follow is enabled
+                if self.auto_follow and self.map_web.page():
+                    js_code = f"""
+                    if (typeof window.bridge !== 'undefined' && window.bridge && window.bridge.centerOnUser) {{
+                        window.bridge.centerOnUser({lat}, {lon});
+                    }}
+                    """
+                    self.map_web.page().runJavaScript(js_code)
+    
+    def _on_position_error(self, error: int):
+        """Handle GPS position error."""
+        error_messages = {
+            0: "Tidak ada error",
+            1: "Akses ditolak",
+            2: "Tidak ada posisi tersedia",
+            3: "Timeout"
+        }
+        msg = error_messages.get(error, f"Error {error}")
+        print(f"GPS Error: {msg}")
+        self.use_location_btn.setChecked(False)
+        self.auto_follow = False
     
     def on_marker_clicked(self, location_id: str):
         """Handle marker click."""
@@ -458,7 +713,7 @@ class MapView(QWidget):
         """Load saved settings."""
         self.user_lat = float(self.settings.value("user_lat", -6.2297))
         self.user_lon = float(self.settings.value("user_lon", 106.7997))
-        radius = int(self.settings.value("radius_km", 5))
+        radius = int(self.settings.value("radius_km", 4000))  # Default covers all Indonesia
         self.radius_slider.setValue(radius)
         self.radius_label.setText(f"{radius} km")
 

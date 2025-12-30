@@ -14,7 +14,7 @@ from ml.config import CLASSES
 DEFAULT_LAT = -6.2297  # Jakarta Selatan
 DEFAULT_LON = 106.7997
 
-def load_locations_from_xlsx(file_path='jakarta.xlsx'):
+def load_locations_from_xlsx(file_path='data_sipsn.xlsx'):
     """
     Load location data from Excel file and randomize coordinates across Jakarta.
     Assigns random plastic categories (HDPE, PET, PP, PS) using a fixed seed.

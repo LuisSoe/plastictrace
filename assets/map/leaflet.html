@@ -1,143 +1,301 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PlastiTrace Map</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
-    <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css"
+    />
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+      }
+      #map {
+        width: 100%;
+        height: 100vh;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="map"></div>
-    
-    <script>
-        // Initialize map centered on Jakarta
-        var map = L.map('map').setView([-6.2297, 106.7997], 12);
-        
-        // Add OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors',
-            maxZoom: 19
-        }).addTo(map);
-        
-        // Marker cluster group
-        var markers = L.markerClusterGroup({
-            chunkedLoading: true,
-            maxClusterRadius: 50
-        });
-        map.addLayer(markers);
-        
-        // User location marker
-        var userMarker = null;
-        
-        // Selected marker
-        var selectedMarker = null;
-        
-        // Bridge object for QWebChannel communication
-        var bridge = {
-            // Set user location
-            setUserLocation: function(lat, lon) {
-                if (userMarker) {
-                    map.removeLayer(userMarker);
-                }
-                userMarker = L.marker([lat, lon], {
-                    icon: L.icon({
-                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34]
-                    })
-                }).addTo(map);
-                userMarker.bindPopup("Lokasi Anda").openPopup();
-            },
-            
-            // Clear all markers
-            clearMarkers: function() {
-                markers.clearLayers();
-            },
-            
-            // Add location marker
-            addLocation: function(id, name, lat, lon, address, distance, types) {
-                var marker = L.marker([lat, lon], {
-                    icon: L.icon({
-                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-                        iconSize: [25, 41],
-                        iconAnchor: [12, 41],
-                        popupAnchor: [1, -34]
-                    })
-                });
-                
-                var popupContent = '<div style="min-width: 200px;">' +
-                    '<h3 style="margin: 0 0 8px 0; font-size: 14px;">' + name + '</h3>' +
-                    '<p style="margin: 4px 0; font-size: 12px; color: #666;">' + address + '</p>' +
-                    '<p style="margin: 4px 0; font-size: 12px;"><strong>Jarak:</strong> ' + distance.toFixed(2) + ' km</p>' +
-                    '<p style="margin: 4px 0; font-size: 12px;"><strong>Jenis:</strong> ' + types.join(', ') + '</p>' +
-                    '<button onclick="bridge.navigate(' + lat + ', ' + lon + ')" style="margin-top: 8px; padding: 6px 12px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">Navigasi</button>' +
-                    '</div>';
-                
-                marker.bindPopup(popupContent);
-                marker.on('click', function() {
-                    if (selectedMarker) {
-                        selectedMarker.setIcon(L.icon({
-                            iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png',
-                            iconSize: [25, 41],
-                            iconAnchor: [12, 41]
-                        }));
-                    }
-                    selectedMarker = marker;
-                    marker.setIcon(L.icon({
-                        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
-                        iconSize: [30, 48],
-                        iconAnchor: [15, 48]
-                    }));
-                    bridge.onMarkerClicked(id);
-                });
-                
-                markers.addLayer(marker);
-            },
-            
-            // Fit bounds to show all markers
-            fitBounds: function() {
-                if (markers.getLayers().length > 0) {
-                    map.fitBounds(markers.getBounds().extend(userMarker ? userMarker.getLatLng() : []), {
-                        padding: [50, 50]
-                    });
-                }
-            },
-            
-            // Pan to location
-            panTo: function(lat, lon) {
-                map.panTo([lat, lon], {animate: true});
-            },
-            
-            // Navigate callback (opens Google Maps)
-            navigate: function(lat, lon) {
-                var url = 'https://www.google.com/maps/dir/?api=1&destination=' + lat + ',' + lon;
-                bridge.openUrl(url);
-            },
-            
-            // Callbacks (will be set by QWebChannel)
-            onMarkerClicked: function(id) {},
-            openUrl: function(url) {}
-        };
-        
-        // Expose bridge to window
-        window.bridge = bridge;
-    </script>
-</body>
-</html>
 
+    <script>
+      // Initialize map centered on Jakarta
+      var map = L.map("map").setView([-6.2297, 106.7997], 12);
+
+      // Add OpenStreetMap tiles
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: "© OpenStreetMap contributors",
+        maxZoom: 19,
+      }).addTo(map);
+
+      // Marker cluster group
+      var markers = L.markerClusterGroup({
+        chunkedLoading: true,
+        maxClusterRadius: 50,
+        spiderfyOnMaxZoom: true,
+        showCoverageOnHover: true,
+        zoomToBoundsOnClick: true
+      });
+      map.addLayer(markers);
+      
+      console.log('Marker cluster group initialized');
+
+      // User location marker
+      var userMarker = null;
+
+      // Selected marker
+      var selectedMarker = null;
+
+      // Bridge object for QWebChannel communication
+      // Initialize immediately with fallback functions so Python can call it right away
+      var bridge = {
+        // Set user location
+        setUserLocation: function (lat, lon) {
+          if (userMarker) {
+            map.removeLayer(userMarker);
+          }
+          userMarker = L.marker([lat, lon], {
+            icon: L.icon({
+              iconUrl:
+                "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png",
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+            }),
+          }).addTo(map);
+          userMarker.bindPopup("Lokasi Anda").openPopup();
+        },
+
+        // Center map on user location (for auto-follow)
+        centerOnUser: function (lat, lon) {
+          map.setView([lat, lon], map.getZoom(), { animate: true });
+          // Update user marker if it exists
+          if (userMarker) {
+            userMarker.setLatLng([lat, lon]);
+          } else {
+            mapFunctions.setUserLocation(lat, lon);
+          }
+        },
+
+        // Set user location from browser geolocation
+        setUserLocationFromBrowser: function (lat, lon) {
+          mapFunctions.setUserLocation(lat, lon);
+          map.setView([lat, lon], 15, { animate: true });
+        },
+
+        // Clear all markers
+        clearMarkers: function () {
+          console.log('Clearing markers, current count:', markers.getLayers().length);
+          markers.clearLayers();
+          console.log('Markers cleared');
+        },
+
+        // Add location marker
+        addLocation: function (id, name, lat, lon, address, distance, types) {
+          try {
+            console.log('Adding marker:', id, name, lat, lon);
+            
+          var marker = L.marker([lat, lon], {
+            icon: L.icon({
+              iconUrl:
+                "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+              iconSize: [25, 41],
+              iconAnchor: [12, 41],
+              popupAnchor: [1, -34],
+            }),
+          });
+
+          var popupContent =
+            '<div style="min-width: 200px;">' +
+            '<h3 style="margin: 0 0 8px 0; font-size: 14px;">' +
+            name +
+            "</h3>" +
+            '<p style="margin: 4px 0; font-size: 12px; color: #666;">' +
+            address +
+            "</p>" +
+            '<p style="margin: 4px 0; font-size: 12px;"><strong>Jarak:</strong> ' +
+            distance.toFixed(2) +
+            " km</p>" +
+            '<p style="margin: 4px 0; font-size: 12px;"><strong>Jenis:</strong> ' +
+              (Array.isArray(types) ? types.join(", ") : String(types)) +
+            "</p>" +
+              '<button onclick="(function(){if(window.bridge&&window.bridge.navigate){window.bridge.navigate(' +
+            lat +
+            ", " +
+            lon +
+              ');}else{window.open(\'https://www.google.com/maps/dir/?api=1&destination=' +
+              lat +
+              "," +
+              lon +
+              '\',\'_blank\');}})()" style="margin-top: 8px; padding: 6px 12px; background: #10b981; color: white; border: none; border-radius: 4px; cursor: pointer;">Navigasi</button>' +
+            "</div>";
+
+          marker.bindPopup(popupContent);
+          marker.on("click", function () {
+            if (selectedMarker) {
+              selectedMarker.setIcon(
+                L.icon({
+                  iconUrl:
+                    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png",
+                  iconSize: [25, 41],
+                  iconAnchor: [12, 41],
+                })
+              );
+            }
+            selectedMarker = marker;
+            marker.setIcon(
+              L.icon({
+                iconUrl:
+                  "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png",
+                iconSize: [30, 48],
+                iconAnchor: [15, 48],
+              })
+            );
+              if (bridge.onMarkerClicked) {
+            bridge.onMarkerClicked(id);
+              }
+          });
+
+            // Add to marker cluster group
+          markers.addLayer(marker);
+            console.log('Marker added successfully, total markers:', markers.getLayers().length);
+          } catch (e) {
+            console.error('Error in addLocation:', e, {id: id, name: name, lat: lat, lon: lon});
+          }
+        },
+
+        // Fit bounds to show all markers
+        fitBounds: function () {
+          var markerCount = markers.getLayers().length;
+          console.log('fitBounds called, marker count:', markerCount);
+          
+          if (markerCount > 0) {
+            try {
+              var bounds = markers.getBounds();
+              if (bounds.isValid()) {
+                // Extend bounds to include user marker if it exists
+                if (userMarker) {
+                  bounds.extend(userMarker.getLatLng());
+                }
+                
+                // Fit map to bounds with padding
+                map.fitBounds(bounds, {
+                padding: [50, 50],
+                  maxZoom: 15
+                });
+                
+                console.log('Map fitted to bounds:', bounds.toBBoxString());
+              } else {
+                console.warn('Invalid bounds, centering on first marker');
+                var firstMarker = markers.getLayers()[0];
+                if (firstMarker) {
+                  map.setView(firstMarker.getLatLng(), 13);
+                }
+              }
+            } catch (e) {
+              console.error('Error in fitBounds:', e);
+              // Fallback: center on first marker
+              var firstMarker = markers.getLayers()[0];
+              if (firstMarker) {
+                map.setView(firstMarker.getLatLng(), 13);
+              }
+            }
+          } else {
+            console.warn('No markers to fit bounds to');
+          }
+        },
+
+        // Pan to location
+        panTo: function (lat, lon) {
+          map.panTo([lat, lon], { animate: true });
+        },
+
+        // Navigate callback (opens Google Maps)
+        navigate: function (lat, lon) {
+          var url =
+            "https://www.google.com/maps/dir/?api=1&destination=" +
+            lat +
+            "," +
+            lon;
+          if (bridge.openUrl) {
+          bridge.openUrl(url);
+          } else {
+            window.open(url, "_blank");
+          }
+        },
+
+        // Placeholder callbacks (will be replaced by QWebChannel)
+        onMarkerClicked: function (id) {
+          console.log("Marker clicked:", id);
+        },
+        openUrl: function (url) {
+          window.open(url, "_blank");
+        },
+      };
+
+      // Expose bridge to window immediately
+      window.bridge = bridge;
+
+      // Initialize QWebChannel when ready (upgrade bridge with Python callbacks)
+      function initQWebChannel() {
+        if (typeof qt !== "undefined" && qt.webChannelTransport && typeof QWebChannel !== "undefined") {
+          try {
+            new QWebChannel(qt.webChannelTransport, function (channel) {
+              // Get Python bridge callbacks
+              var pythonBridge = channel.objects.bridge;
+              
+              // Replace callbacks with Python versions
+              if (pythonBridge.onMarkerClicked) {
+                bridge.onMarkerClicked = pythonBridge.onMarkerClicked.bind(pythonBridge);
+              }
+              if (pythonBridge.openUrl) {
+                bridge.openUrl = pythonBridge.openUrl.bind(pythonBridge);
+              }
+              
+              console.log("QWebChannel bridge upgraded with Python callbacks");
+            });
+          } catch (e) {
+            console.error("QWebChannel initialization error:", e);
+          }
+        }
+      }
+      
+      // Wait for QWebChannel script to load
+      if (typeof QWebChannel !== "undefined") {
+        initQWebChannel();
+      } else {
+        // Wait for script to load
+        var checkQWebChannel = setInterval(function() {
+          if (typeof QWebChannel !== "undefined") {
+            clearInterval(checkQWebChannel);
+            initQWebChannel();
+          }
+        }, 50);
+        
+        // Timeout after 5 seconds
+        setTimeout(function() {
+          clearInterval(checkQWebChannel);
+          if (typeof QWebChannel === "undefined") {
+            console.log("QWebChannel not available, using fallback bridge");
+          }
+        }, 5000);
+      }
+    </script>
+  </body>
+</html>

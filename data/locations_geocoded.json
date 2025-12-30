@@ -1,0 +1,2602 @@
+[
+  {
+    "id": "sipsn_2",
+    "name": "BANK SAMPAH INDUK KOTA NAGA",
+    "lat": 3.067979,
+    "lon": 97.4687715,
+    "address": "D.I Panjaitan, Tapaktuan, Kab. Aceh Selatan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_3",
+    "name": "BANK SAMPAH INDUK BERKAH GLEH",
+    "lat": 3.067979,
+    "lon": 97.4687715,
+    "address": "Lorang Tengah Gampong Suak Hulu Samadua, Kab. Aceh Selatan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_4",
+    "name": "BANK SAMPAH INDUK PASRAN MAKMUE SEJAHTERA",
+    "lat": 3.067979,
+    "lon": 97.4687715,
+    "address": "Gampong Pasi Rasian, Kab. Aceh Selatan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_5",
+    "name": "Bank Sampah Rimo Kompos",
+    "lat": 2.3758794,
+    "lon": 97.9244295,
+    "address": "Jalan Singkil Rimo Km 5 Aceh Singkil, Kab. Aceh Singkil",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_6",
+    "name": "Asri",
+    "lat": 5.1959828,
+    "lon": 96.7778169,
+    "address": "Gampong Blang Asan, Kecamatan Peusangan, Kab. Bireuen",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_7",
+    "name": "Bank Sampah Lestari Sukma",
+    "lat": 4.181243,
+    "lon": 96.5257726,
+    "address": "KOMPLEK PERKANTORAN  SUKA MAKMUE, Kab. Nagan Raya",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_8",
+    "name": "Bank Sampah Induk",
+    "lat": 4.2122625,
+    "lon": 97.9147111,
+    "address": "Dusun Subur Kampung Durian Kecamatan Rantau Kabupaten Aceh Tamiang, Rantau, Kab. Aceh Tamiang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_9",
+    "name": "BANK SAMPAH BINTANG BEKAS",
+    "lat": 4.7738799,
+    "lon": 96.9780036,
+    "address": "Kampung Bale Atu kecamatan bukit, Kab. Bener Meriah",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_10",
+    "name": "Bank Sampah Induk Sadar Mandiri",
+    "lat": 5.5528455,
+    "lon": 95.3192908,
+    "address": "Jl Tgk  Dianjong, kuta raja, Kota Banda Aceh",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_11",
+    "name": "BANK SAMPAH YAYASAN SYAH KUTA SAMAWI",
+    "lat": 5.1789659,
+    "lon": 97.1480544,
+    "address": "UJONG BLANG KECAMATAN BANDA SAKTI KOTA LHOKSEUMAWE, Kota Lhokseumawe",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_12",
+    "name": "Bank Sampah Induk Srikandi",
+    "lat": 4.4730892,
+    "lon": 97.9681841,
+    "address": "Jalan Prof. Majid Ibrahim No. 100, Langsa Barat, Kota Langsa",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_13",
+    "name": "sumatera trash bank",
+    "lat": 1.1427537,
+    "lon": 102.0829907,
+    "address": "bukit lawang, bahorok, Kab. Langkat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_14",
+    "name": "Bank Sampah Induk Stabat",
+    "lat": 1.1427537,
+    "lon": 102.0829907,
+    "address": "Jl Karya Bakti, stabat, Kab. Langkat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_15",
+    "name": "Simpati Sait Buttu",
+    "lat": 2.9504522,
+    "lon": 98.7835111,
+    "address": "Pamatang Sidamanik, Kab. Simalungun",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_16",
+    "name": "Bank Sampah Ias Toba",
+    "lat": -0.2724311,
+    "lon": 110.0727916,
+    "address": "jl. Somba Debata No. 7 Balige, Kab. Toba",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_17",
+    "name": "Bank Sampah Tarhilala",
+    "lat": -0.2724311,
+    "lon": 110.0727916,
+    "address": "Jl. Raya Balige, Ds Lbn Pea Timur, Kab. Toba",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_18",
+    "name": "BSI Sicanang",
+    "lat": 3.5894617,
+    "lon": 98.6741623,
+    "address": "Jalan Kelapa Blok 21 Link 19, Medan Belawan, Kota Medan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_19",
+    "name": "BSI- New Normal",
+    "lat": 3.5894617,
+    "lon": 98.6741623,
+    "address": "Jl. Ring Road Pasar I Gg. Mekar Mulio, Kota Medan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_20",
+    "name": "Bank Sampah Induk HIGEMPAMA",
+    "lat": -1.7185794,
+    "lon": 100.9270249,
+    "address": "Jl. Painan - Bengkulu, IV Jurai, Kab. Pesisir Selatan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_21",
+    "name": "Bank Sampah Induk Lansek Manih",
+    "lat": -0.6964425,
+    "lon": 100.9936303,
+    "address": "Muaro, Sijunjung, Kab. Sijunjung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_22",
+    "name": "Bank Sampah Induk Tiga Saudara",
+    "lat": -0.468996,
+    "lon": 100.6361603,
+    "address": "Jorong Bukik Gombak Nagari Baringin Kecamatan Limaa Kaum, Kab. Tanah Datar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_23",
+    "name": "Bank Sampah Induk ANISA",
+    "lat": -0.468996,
+    "lon": 100.6361603,
+    "address": "Baringin, Lima Kaum, Kab. Tanah Datar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_24",
+    "name": "Permata Plastik",
+    "lat": 0.5313654,
+    "lon": 101.4540144,
+    "address": "Ketinggian, Kab. Lima Puluh Kota",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_25",
+    "name": "Bank Sampah Induk UD ZAINAL",
+    "lat": 0.3974048,
+    "lon": 100.0249789,
+    "address": "Jalan Bulakan -, Lubuk Sikaping, Kab. Pasaman",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_26",
+    "name": "Bank Sampah Induk Indah Basamo",
+    "lat": 0.4409509,
+    "lon": 100.0396156,
+    "address": "Nagari Padang Gelugur, Kecamatan Padang Gelugur, Kab. Pasaman",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_27",
+    "name": "Bank Sampah Induk Sakinah",
+    "lat": -0.9247587,
+    "lon": 100.3632561,
+    "address": "jl Bukit Ngalau, Lubuk Kilangan, Kota Padang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_28",
+    "name": "Bank Sampah Induk Panca Daya",
+    "lat": -0.9247587,
+    "lon": 100.3632561,
+    "address": "Jl. Bypass KM 9,5, Kota Padang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_29",
+    "name": "Bank Sampah Hanasty",
+    "lat": -0.93103,
+    "lon": 100.804328,
+    "address": "Jalan Teneng No.7, Lubuk Sikarah, Kota Solok",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_30",
+    "name": "BSI CEMARA",
+    "lat": -0.6818141,
+    "lon": 100.778552,
+    "address": "Zainuddin Tembak, Barangin, Kota Sawahlunto",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_31",
+    "name": "BANK SAMPAH INDUK EMAS BERSIH",
+    "lat": -0.6818141,
+    "lon": 100.778552,
+    "address": "KAYU GADANG, Kota Sawahlunto",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_32",
+    "name": "Bank Sampah Induk Bank Sampah Sarunai",
+    "lat": -0.4654636,
+    "lon": 100.3932441,
+    "address": "Jl. Ar Rasuli  RT 5, Padang Panjang Timur, Kota Padang Panjang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_33",
+    "name": "Bank induk Mutiara Indah",
+    "lat": -0.3061258,
+    "lon": 100.3731058,
+    "address": "Aua Tajungkang tangah sawah, Kota Bukittinggi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_34",
+    "name": "BANK SAMPAH BERSERI",
+    "lat": 1.7697227,
+    "lon": 101.9124384,
+    "address": "Jl. Hasanudin Bengkalis, Bengkalis, Kab. Bengkalis",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_35",
+    "name": "BANK SAMPAH NAD'S PLASTIK",
+    "lat": 0.9043104,
+    "lon": 100.4573683,
+    "address": "JL. LINGKAR, RAMBAH, Kab. Rokan Hulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_36",
+    "name": "Bank Sampah Induk Pelangi",
+    "lat": 0.8275337,
+    "lon": 101.8461936,
+    "address": "Jl. Panglima Udan 03/02, Siak, Kab. Siak",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_37",
+    "name": "PLASTINDO FAMILY",
+    "lat": -0.4300265,
+    "lon": 101.6096607,
+    "address": "Beringin Taluk, Kab. Kuantan Singingi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_38",
+    "name": "Pasar Pangean",
+    "lat": -0.487292,
+    "lon": 101.6929409,
+    "address": "Rt/Rw 014/ Pasar Baru Pangean, Kec. Pangean, Kab. Kuantan Singingi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_39",
+    "name": "Bank Sampah Induk BANK SAMPAH SETIA BUDI",
+    "lat": -1.5161123,
+    "lon": 101.9847534,
+    "address": "Jl. Lintas Sumatra Km. 4 RT 13 RW 05, Bathin III, Kab. Bungo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_40",
+    "name": "BANK SAMPAH INDUK HIDAYAH",
+    "lat": -1.5161123,
+    "lon": 101.9847534,
+    "address": "Jl. R. M. Thaher, Kab. Bungo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_41",
+    "name": "Bank Sampah Induk Dream",
+    "lat": -1.7069965,
+    "lon": 102.7140041,
+    "address": "H. Kamil 15, Jambi Selatan, Kota Jambi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_42",
+    "name": "Bank Sampah Induk Sebimbing Sekundang",
+    "lat": -4.1101012,
+    "lon": 104.0082838,
+    "address": "Nawawi Al-Hajj, Kab. Ogan Komering Ulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_43",
+    "name": "Bank Sampah Induk Manfaat Bersama",
+    "lat": -3.7499779,
+    "lon": 103.7960465,
+    "address": "Muara Enim, Muara Enim, Kab. Muara Enim",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_44",
+    "name": "Bank Sampah Induk DP PARTNER",
+    "lat": -3.8793457,
+    "lon": 103.4140863,
+    "address": "Jl. Alternatif Lintas Lahat Pagaralam Perumahan Bungamas Indikat Ilir, Gumay Talang, Kab. Lahat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_45",
+    "name": "Bank Sampah Induk Sempurna",
+    "lat": -3.175756,
+    "lon": 103.2500109,
+    "address": "Jl. Sulaiman Amin, Muara Beliti, Kab. Musi Rawas",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_46",
+    "name": "Bank Sampah Induk PRIMA",
+    "lat": -2.490934,
+    "lon": 103.7048186,
+    "address": "INPRES PENJARA 018/ 001, SEKAYU, Kab. Musi Banyuasin",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_47",
+    "name": "BANK SAMPAH PALI",
+    "lat": -3.213995,
+    "lon": 104.0076941,
+    "address": "TALANG KEMANG RT.02/ RW.05 KEL. TALANG UBI SELATAN KEC. TALANG UBI, Kab. Penukal Abab Lematang Ilir",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_48",
+    "name": "Bank Sampah Induk Bank Sampah Prabumulih",
+    "lat": -3.4382688,
+    "lon": 104.2310181,
+    "address": "JL. Arjuna 2 02/05, Prabumulih Utara, Kota Prabumulih",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_49",
+    "name": "Bank Sampah Induk Usaha Bersama",
+    "lat": -3.1891333,
+    "lon": 101.8576418,
+    "address": "Jl.Raya Gunung Selan 001/003, Arga Makmur, Kab. Bengkulu Utara",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_50",
+    "name": "Gudang Barang Bekas Steven",
+    "lat": -3.8440951,
+    "lon": 102.3087821,
+    "address": "Jalan Sungai Rupat, Kota Bengkulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_51",
+    "name": "Bank Sampah Budi Sentosa",
+    "lat": -3.8259103,
+    "lon": 102.2972202,
+    "address": "Jalan Gedang, Kota Bengkulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_52",
+    "name": "Bank Sampah Intan Swarna",
+    "lat": -4.0035184,
+    "lon": 101.8393474,
+    "address": "Jalan Raya Betungan - Sp Kandis, Kota Bengkulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_53",
+    "name": "Bank Sampah Bintang Terang",
+    "lat": -4.0035184,
+    "lon": 101.8393474,
+    "address": "Jalan Mangga Raya, Kota Bengkulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_54",
+    "name": "Gudang Barang Bekas UD Redho",
+    "lat": -3.7966107,
+    "lon": 102.2702539,
+    "address": "Jalan Mahoni, Kota Bengkulu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_55",
+    "name": "RIZQI",
+    "lat": -4.3980264,
+    "lon": 105.5542801,
+    "address": "Gang Kamboja Tunggal Warga, Kab. Tulang Bawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_56",
+    "name": "Bank Sampah Tanggamus",
+    "lat": -5.5140538,
+    "lon": 104.7771435,
+    "address": "AMS Way Som, Kota Agung, Kab. Tanggamus",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_57",
+    "name": "BSI PEMULA",
+    "lat": -4.5669404,
+    "lon": 104.5161602,
+    "address": "UMPU BHAKTI, Kab. Way Kanan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_58",
+    "name": "Bank Sampah Ragom Maju Jejama",
+    "lat": -5.4460713,
+    "lon": 105.2643742,
+    "address": "Jl. Pramuka No.18, Kemiling, Kota Bandar Lampung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_59",
+    "name": "Bank Sampah Induk SRI MENANTI BERKARYA",
+    "lat": -2.3081245,
+    "lon": 106.0281521,
+    "address": "JL SAMRATULANGI 2, SUNGAILIAT, Kab. Bangka",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_60",
+    "name": "BANK SAMPAH AKAR BEREBAT",
+    "lat": -2.8842812,
+    "lon": 107.6631596,
+    "address": "JALAN YOS SUDARSO NO.01 TANJUNGPANDAN - BELITUNG, Kab. Belitung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_61",
+    "name": "Bank Sampah Induk De eL Ha",
+    "lat": -2.7768976,
+    "lon": 106.2939584,
+    "address": "DUSUN PARIT 9, Kab. Bangka Selatan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_62",
+    "name": "BANK SAMPAH SEPAKAT",
+    "lat": -1.8412375,
+    "lon": 105.5518712,
+    "address": "JL RAYA MUNTOK PANGKALPINANG, DS, AIR LIMAU, MUNTOK, BANGKA BARAT, MUNTOK, Kab. Bangka Barat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_63",
+    "name": "Bank Sampah Pelangi Nusa",
+    "lat": -2.9164574,
+    "lon": 108.0037218,
+    "address": "Padang, Kab. Belitung Timur",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_64",
+    "name": "Bank Sampah Induk Penyu Belimbing",
+    "lat": 1.0196577,
+    "lon": 104.5698189,
+    "address": "Jl. Korindo Km.22 No.01 A RT.003/RW.01, Bintan Timur, Kab. Bintan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_65",
+    "name": "Bank Sampah Induk al-baroqah",
+    "lat": 0.7653871,
+    "lon": 103.4287445,
+    "address": "jln.ahmad yani, karimun, Kab. Karimun",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_66",
+    "name": "Bank Sampah Induk Berseri",
+    "lat": 0.9236915,
+    "lon": 104.446094,
+    "address": "Jl. Sultan Machmud Gg. Swadaya No. 19 RT2 RW3, Kota Tanjung Pinang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_67",
+    "name": "BANK SAMPAH KUMALA ( INDUK )",
+    "lat": -6.2297,
+    "lon": 106.7997,
+    "address": "JL. BUDI DAYA NO 44 RT.001 / RW.008, Kota Adm. Jakarta Utara",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_68",
+    "name": "Bank Sampah Induk Satu Hati",
+    "lat": -6.151917,
+    "lon": 106.775199,
+    "address": "Jalan Bina Serasi RT 005/RW 05, Cengkareng, Kota Adm. Jakarta Barat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_69",
+    "name": "BANK SAMPAH RW. 017",
+    "lat": -6.5963564,
+    "lon": 106.7973188,
+    "address": "Puri Bojong Lestari 2, Jl. Puri Lestari VII Blok CK No. 1 RT 06/RW 15 Kedung waringin Bojonggede, Kab. Bogor",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_70",
+    "name": "KARYA MUDA MANDIRI",
+    "lat": -6.5963564,
+    "lon": 106.7973188,
+    "address": "KP.LULUT RT 02 RW 01GANG MASJID BAITURAHMAN,KEC.KLAPANUNGGAL.KAB.BOGOR, Kab. Bogor",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_71",
+    "name": "Binangkit Sabilulungan Citaliktik",
+    "lat": -6.9218457,
+    "lon": 107.6070833,
+    "address": "Soreang, Bandung, 40911, Kab. Bandung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_72",
+    "name": "BSB Induk",
+    "lat": -6.9218457,
+    "lon": 107.6070833,
+    "address": "Jln Terusan Bojongsoang no 174 A, Kamp MekarsariJln Terusan Bojongsoang no 174 A, Kamp Mekarsari 05 / 27, Bojongsoang, Kab. Bandung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_73",
+    "name": "ALHUDA (INDUK)",
+    "lat": -7.3131593,
+    "lon": 108.4048938,
+    "address": "TARIKOLOT, Rancah, Kab. Ciamis",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_74",
+    "name": "Bank Sampah Ciamis",
+    "lat": -7.3131593,
+    "lon": 108.4048938,
+    "address": "Jl. Mr. Iwa Kusuma Sumantri No 21, Ciamis, Kab. Ciamis",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_75",
+    "name": "KALIFAH",
+    "lat": -6.9869841,
+    "lon": 108.5538158,
+    "address": "Jl. SUDIRMAN - KUNINGAN, Kab. Kuningan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_76",
+    "name": "BSI Kuda Sembrani",
+    "lat": -6.9869841,
+    "lon": 108.5538158,
+    "address": "Kelurahan Cipari, Kab. Kuningan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_77",
+    "name": "MAJU",
+    "lat": -6.9869841,
+    "lon": 108.5538158,
+    "address": "JL Moch Yamin, Kab. Kuningan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_78",
+    "name": "KSM CBO IBU TIN BERSERI",
+    "lat": -6.4418537,
+    "lon": 108.1765472,
+    "address": "Desa Tinumpuk Rt.1/Rw.04, Kab. Indramayu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_79",
+    "name": "Rapih Mulya Mandiri",
+    "lat": -6.4418537,
+    "lon": 108.1765472,
+    "address": "Jl. Telkom, Kab. Indramayu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_80",
+    "name": "BSI Ecovillage Karawang",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Perum Cengkong Persada Blok C11/16, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_81",
+    "name": "BSI Adiarsa",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Jl. Cisokan Raya No. 4 Perumnas Adiarsa, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_82",
+    "name": "BSI Mandiri Bengle Sejahtera",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Perum Citra Kebun Mas Blok B RT 23 RW 07, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_83",
+    "name": "BSI Al Firdaus",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Kp. Kopo Barat RT 06 RW 03, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_84",
+    "name": "BSI Latanza",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Kp.sukamulya rt03rw10, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_85",
+    "name": "BSI CENTRAL ADIWIYATA",
+    "lat": -6.2649114,
+    "lon": 107.4294213,
+    "address": "Jl. Cisokan Raya No. 4 Perumnas Adiarsa, Kab. Karawang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_86",
+    "name": "Bening Saguling Foundation",
+    "lat": -6.9255721,
+    "lon": 107.4796781,
+    "address": "Kp. Babakan Cianjur RT 06 RW 04 Desa Cihampelas, Kec. Cihampelas, Kab. Bandung Barat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_87",
+    "name": "Kabut Indonesia",
+    "lat": -6.897754,
+    "lon": 107.4124294,
+    "address": "Jalan Terusan Pasir Halang no.30 RT 03 RW 07 Desa Jambudipa, Cisarua, Kab. Bandung Barat",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_88",
+    "name": "BANK SAMPAH INDUK \"SAHATE\"",
+    "lat": -7.6407968,
+    "lon": 108.5567288,
+    "address": "CIKEMBULAN, Kab. Pangandaran",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_89",
+    "name": "Bank Sampah Induk KITA",
+    "lat": -6.5963564,
+    "lon": 106.7973188,
+    "address": "Jl Pandawa Raya Blok B1 No 21 Bantarjati, Bogor Tengah, Kota Bogor",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_90",
+    "name": "Bank Sampah Induk Kota Bandung",
+    "lat": -6.9218457,
+    "lon": 107.6070833,
+    "address": "Jl Babakan Sari 1 No.64, Kiaracondong, Kota Bandung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_91",
+    "name": "Bank Sampah Mekar Berseri",
+    "lat": -6.7137044,
+    "lon": 108.5608483,
+    "address": "RW 09 Kesunean Selatan, Lemahwungkuk, Kota Cirebon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_92",
+    "name": "Bank Sampah Secerah Pagi",
+    "lat": -6.7137044,
+    "lon": 108.5608483,
+    "address": "RW 08 Merbabu Asih, Harjamukti, Kota Cirebon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_93",
+    "name": "Bank Sampah Induk Patriot",
+    "lat": -6.2349858,
+    "lon": 106.9945444,
+    "address": "Mustika Jaya, Mustika Jaya, Kota Bekasi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_94",
+    "name": "Bank Sampah Induk Rumah Harum",
+    "lat": -6.40719,
+    "lon": 106.8158371,
+    "address": "Merdeka no 1 005/01, Sukmajaya, Kota Depok",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_95",
+    "name": "Bank Sampah Induk Depok Hijau",
+    "lat": -6.3804433,
+    "lon": 106.814011,
+    "address": "Beji, Beji, Kota Depok",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_96",
+    "name": "Bank Sampah Induk Resik",
+    "lat": -7.3262484,
+    "lon": 108.2201154,
+    "address": "Jl. Noenoeng Tisnasaputra, Tawang, Kota Tasikmalaya",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_97",
+    "name": "Bank Sampah Induk Cilacap",
+    "lat": -7.461671,
+    "lon": 108.8046146,
+    "address": "Jl. MT Haryono No. 74, Cilacap Tengah, Kab. Cilacap",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_98",
+    "name": "Sami Bangga",
+    "lat": -7.32733,
+    "lon": 109.3998987,
+    "address": "Purbalingga, Kab. Purbalingga",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_99",
+    "name": "Bank Sampah Induk Cikrak",
+    "lat": -7.6439744,
+    "lon": 109.6077921,
+    "address": "Jatimulyo, Kab. Kebumen",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_100",
+    "name": "BANK SAMPAH INDUK WONOSOBO",
+    "lat": -7.3998,
+    "lon": 109.9209645,
+    "address": "Wonorejo, Kab. Wonosobo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_101",
+    "name": "BSI Dipa Nirmala",
+    "lat": -7.4770747,
+    "lon": 110.2182164,
+    "address": "Kaweron, Kab. Magelang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_102",
+    "name": "2024 BSI MAJU MANDIRI",
+    "lat": -7.6732387,
+    "lon": 110.6284785,
+    "address": "KLATEN, Kab. Klaten",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_103",
+    "name": "BANK SAMPAH BERSERI (KRANDEGAN)",
+    "lat": -7.9620507,
+    "lon": 110.9575733,
+    "address": "Dusun Kuniran RT 01 RW 07, Kab. Wonogiri",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_104",
+    "name": "Bank Sampah Induk Murakabi",
+    "lat": -7.3924563,
+    "lon": 110.9530232,
+    "address": "Kp. Kecik, Tanon, Kab. Sragen",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_105",
+    "name": "Bank Sampah Induk Si Repi",
+    "lat": -7.3924563,
+    "lon": 110.9530232,
+    "address": "Duyungan, Kab. Sragen",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_106",
+    "name": "Bank Sampah Induk Kab. Pati",
+    "lat": -6.7534144,
+    "lon": 111.0399982,
+    "address": "Jl Flamboyan 1, Perum Wijaya Kusuma, Desa Kutoharjo, Pati, Kab. Pati",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_107",
+    "name": "BANK SAMPAH INDUK KAB. KUDUS",
+    "lat": -6.7978494,
+    "lon": 110.8679109,
+    "address": "Gondangmanis Bae Kudus, Kab. Kudus",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_108",
+    "name": "Bank Sampah Induk Berseri",
+    "lat": -6.5899148,
+    "lon": 110.6672987,
+    "address": "Jl. Sidiq Harun No. 5, Jepara, Kab. Jepara",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_109",
+    "name": "Bank Sampah Berkah Induk Resik Becik Kendal",
+    "lat": -7.0190966,
+    "lon": 110.1374757,
+    "address": "Jalan Lingkar Pasar RT 06 RW VI Langenharjo, Kendal, Kendal, Kab. Kendal",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_110",
+    "name": "BSI SAHABAT BUMI",
+    "lat": -6.8905065,
+    "lon": 109.6761489,
+    "address": "Jl. Singosari No. 65, Kab. Pekalongan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_111",
+    "name": "Bank Sampah Induk Mountrash",
+    "lat": -7.0110802,
+    "lon": 109.3914037,
+    "address": "Pemalang, Kab. Pemalang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_112",
+    "name": "BSI LEMBAH TIDAR LESTARI",
+    "lat": -7.4662499,
+    "lon": 110.2187246,
+    "address": "Pahlawan No 4, Magelang Tengah, Kota Magelang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_113",
+    "name": "BANK SAMPAH KOTA SURAKARTA",
+    "lat": -7.5692489,
+    "lon": 110.828448,
+    "address": "JL. MENTERI SUPENO NO 10, Kota Surakarta",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_114",
+    "name": "BSI DLH Kota Semarang",
+    "lat": -6.9903988,
+    "lon": 110.4229104,
+    "address": "Tapak Raya, Tugurejo, Kota Semarang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_115",
+    "name": "Dhuawar Sejahtera",
+    "lat": -7.8123076,
+    "lon": 110.1479828,
+    "address": "Kroco RT 21 RW 12, Pengasih, Kab. Kulon Progo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_116",
+    "name": "Bank Sampah Induk Catur Mandiri",
+    "lat": -7.9930377,
+    "lon": 110.5579309,
+    "address": "JL. Karangmojo 01/04, Wonosari, Kab. Gunungkidul",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_117",
+    "name": "Bank Sampah Induk K3S ( Kelompok Kerja Kelola Sampah )",
+    "lat": -7.9930377,
+    "lon": 110.5579309,
+    "address": "Ngoro-oro, Patuk, Kab. Gunungkidul",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_118",
+    "name": "Bank Sampah Induk MAJU MANDIRI",
+    "lat": -7.9930377,
+    "lon": 110.5579309,
+    "address": "Umbulrejo, Ponjong, Kab. Gunungkidul",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_119",
+    "name": "Bank sampah Induk Jogja",
+    "lat": -7.8233282,
+    "lon": 110.3817447,
+    "address": "Nitikan 43/11, Umbulharjo, Kota Yogyakarta",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_120",
+    "name": "BANK SAMPAH INDUK PURBOSUMAN PONOROGO",
+    "lat": -7.9712267,
+    "lon": 111.4988929,
+    "address": "Jl. Doplang, Ponorogo, Kab. Ponorogo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_121",
+    "name": "Pemuda",
+    "lat": -8.1359348,
+    "lon": 111.6401983,
+    "address": "KAB. TRENGGALEK, Kab. Trenggalek",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_122",
+    "name": "Bank Sampah  Balistik",
+    "lat": -8.1311983,
+    "lon": 112.3115572,
+    "address": "Jl. Manokwari No. 12B, Kanigoro, Kab. Blitar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_123",
+    "name": "Bank Sampah Induk KALPATARU LUMAJANG",
+    "lat": -8.135205,
+    "lon": 113.2244162,
+    "address": "JL. LANGSEP NO. 5, LUMAJANG, Kab. Lumajang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_124",
+    "name": "BSI Jember",
+    "lat": -8.1837919,
+    "lon": 113.6704085,
+    "address": "Perum Taman Gading AF 15 Rt. 06 Rw. 40 Kel. Tegal Besar, Kec. Kaliwates, Kab. Jember Kel. Tegal Besar, Kec. Kaliwates, Kabupaten Jember, Jawa Timur, Kab. Jember",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_125",
+    "name": "Bank Sampah Induk Bank Sampah Banyuwangi",
+    "lat": -8.3325711,
+    "lon": 114.141579,
+    "address": "KAB. BANYUWANGI, Kab. Banyuwangi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_126",
+    "name": "Bank Sampah Induk PAGUAN",
+    "lat": -7.9451279,
+    "lon": 113.882059,
+    "address": "Paguan, Taman Krocok, Kab. Bondowoso",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_127",
+    "name": "Bank Sampah Induk Situbondo",
+    "lat": -7.7067843,
+    "lon": 114.0054142,
+    "address": "Jalan Baluran No 25 Dusun Pareyaan Utara RT 03 RW 01, Panarukan, Kab. Situbondo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_128",
+    "name": "Bank Sampah Induk SUMRINGAH",
+    "lat": -7.4539769,
+    "lon": 112.6593869,
+    "address": "Ngampelsari, Candi, Kab. Sidoarjo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_129",
+    "name": "Bintang Semesta Majapahit",
+    "lat": -7.5413377,
+    "lon": 112.5094975,
+    "address": "Belahan Tengah, Kab. Mojokerto",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_130",
+    "name": "Bank Sampah Induk SALEPOK OMAHE NGANJUK",
+    "lat": -7.6150161,
+    "lon": 111.9465075,
+    "address": "Jalan Raya Kedondong  No. 1, Bagor, Kab. Nganjuk",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_131",
+    "name": "Bank Sampah Induk Bumi Lestari",
+    "lat": -7.6290837,
+    "lon": 111.5168819,
+    "address": "Desa Sambi Rejo Kecamatan Jiwan, Kab. Madiun",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_132",
+    "name": "Omah APIK",
+    "lat": -7.6542489,
+    "lon": 111.3360565,
+    "address": "Jl. Samodra Bulukerto Magetan, Magetan, Kab. Magetan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_133",
+    "name": "Bank Sampah Induk Ngawi Berkah",
+    "lat": -7.402722,
+    "lon": 111.4443448,
+    "address": "Ds. Karangasri  Kec. Ngawi Kab. Ngawi, Kab. Ngawi",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_134",
+    "name": "BSI PATROL 21",
+    "lat": -7.2278715,
+    "lon": 111.81462,
+    "address": "RT 13 RW 2, TRUCUK, Kab. Bojonegoro",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_135",
+    "name": "Bank Sampah Induk ERTIGA",
+    "lat": -6.9596385,
+    "lon": 111.8932247,
+    "address": "RT03 RW02, Tuban, Kab. Tuban",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_136",
+    "name": "BS Petiken Lestari",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Jl. Mutiara 3 V no 46, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_137",
+    "name": "SAMUSI",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Jl. Kyai Sahlan No.34, Rt.009 Rw.002, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_138",
+    "name": "Guyub Rukun",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Ruko Manyarsidorukun, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_139",
+    "name": "Bank Sampah Meduran Bersatu",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Meduran Bersatu, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_140",
+    "name": "Bersemi Manyarejo",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "RT 1 RW 1 Desa Manyarejo, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_141",
+    "name": "Binar Sekar Buana",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Perum Banjarsari Asri blok o no 3 cerme Gresik, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_142",
+    "name": "PERMATA KISIK",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Jl. Poros Desa Kisik, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_143",
+    "name": "Banjarsari Makmur",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Jl Poros Banjarsari depan lapangan desa banjarsari, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_144",
+    "name": "Gemes Sekardadu",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Jl. Raya Dewi Sekardadu, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_145",
+    "name": "Saber",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Desa Pedagangan RT 6/RW 2, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_146",
+    "name": "Tebaloan",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Desa Tebaloan, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_147",
+    "name": "Hobastank",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Gending, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_148",
+    "name": "Lontar Sewu Berseri",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Desa Hendroasi RT 8/01, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_149",
+    "name": "Resik Pangkah Wetan",
+    "lat": -5.7933465,
+    "lon": 112.6598223,
+    "address": "Rt 4/12 Pangkah Wetan Ujungpangkah Gresik, Kab. Gresik",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_150",
+    "name": "Bank Sampah SAKERA",
+    "lat": -7.0578157,
+    "lon": 113.2540541,
+    "address": "Jl. Ajigunung, Sampang, Kab. Sampang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_151",
+    "name": "BSI Bestari",
+    "lat": -7.1605439,
+    "lon": 113.4826273,
+    "address": "Jl. Nyalabu Permai, Kab. Pamekasan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_152",
+    "name": "Bank Sampah Flamboyan Pamekasan",
+    "lat": -7.1605439,
+    "lon": 113.4826273,
+    "address": "Jl. Mandilaras RW. 08, Pamekasan, Kab. Pamekasan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_153",
+    "name": "Bank Sampah induk Sumekar Sumenep",
+    "lat": -6.9991798,
+    "lon": 113.8376708,
+    "address": "Jl. KH Mansyur No. 25, Kab. Sumenep",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_154",
+    "name": "BANK SAMPAH INDUK DLHKP",
+    "lat": -7.8111057,
+    "lon": 112.0046051,
+    "address": "JL MAYOR BISMO NO 04 KOTA KEDIRI, Kota Kediri",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_155",
+    "name": "Bank Sampah Induk ORBIT",
+    "lat": -8.1311983,
+    "lon": 112.3115572,
+    "address": "Nakulo RT 04 RW 06, Kepanjenkidul, Kota Blitar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_156",
+    "name": "Bank Sampah Induk BANK SAMPAH MALANG",
+    "lat": -7.9771308,
+    "lon": 112.6340265,
+    "address": "JL. S. SUPRIADI NO. 38A, SUKUN, Kota Malang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_157",
+    "name": "Bank Sampah Induk Bank Sampah Maspro Mesra",
+    "lat": -7.7422908,
+    "lon": 113.2093589,
+    "address": "Jalan Anggrek, Mayangan, Kota Probolinggo",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_158",
+    "name": "Bank Sampah Induk Kota Mojokerto",
+    "lat": -7.5413377,
+    "lon": 112.5094975,
+    "address": "JL. TPA RANDEGAN, Magersari, Kota Mojokerto",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_159",
+    "name": "Bank Sampah Induk Kota Madiun",
+    "lat": -7.6290837,
+    "lon": 111.5168819,
+    "address": "Candi Sewu, Manguharjo, Kota Madiun",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_160",
+    "name": "Bank Sampah Induk Surabaya - Yayasan Bina Bhakti Lingkungan",
+    "lat": -7.2898677,
+    "lon": 112.750288,
+    "address": "Jalan Ngagel Timur No. 26, Gubeng, Kota Surabaya",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_161",
+    "name": "Bank Sampah Induk ELHA",
+    "lat": -7.8711667,
+    "lon": 112.5269482,
+    "address": "JL. Abdul Ghani Atas Gg. 4, Batu, Kota Batu",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_162",
+    "name": "Pandeglang Lestari",
+    "lat": -6.5473765,
+    "lon": 105.7994879,
+    "address": "Bangkonol, Kab. Pandeglang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_163",
+    "name": "Bank Sampah Induk",
+    "lat": -6.6432471,
+    "lon": 106.1868837,
+    "address": "Jl. Langlang Buana 02 / 02, Rangkasbitung, Kab. Lebak",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_164",
+    "name": "BANK SAMPAH BERKAH BHAYANGKARA",
+    "lat": -6.0647011,
+    "lon": 106.1199402,
+    "address": "Kramatwatu, Kab. Serang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_165",
+    "name": "Bank Sampah Induk (BSI)",
+    "lat": -6.1828538,
+    "lon": 106.6178524,
+    "address": "Terminal Cimone, Jl. Terminal Cimone, RT.002/RW.001, Cimone Jaya, Kec. Karawaci, Kota Tangerang, Banten 15114, Kota Tangerang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_166",
+    "name": "BANK SAMPAH BERSIH LESTARI",
+    "lat": -5.979364,
+    "lon": 106.0147451,
+    "address": "RAWA ARUM, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_167",
+    "name": "BANK SAMPAH MASARU",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "KEURAHAN MEKARSARI, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_168",
+    "name": "BANK SAMPAH KAYA BERKAH",
+    "lat": -6.02688,
+    "lon": 105.9695585,
+    "address": "RANDAKARI, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_169",
+    "name": "BANK SAMPAH TILAS WIGUNA",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "KELURAHAN SEMANG RAYA, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_170",
+    "name": "BANK SAMPAH HIJRAH PABEAN",
+    "lat": -5.9624364,
+    "lon": 106.0484922,
+    "address": "PABEAN, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_171",
+    "name": "BANK SAMPAH CIKUASA CITRA MANDIRI",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "LINK. CIKUASA, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_172",
+    "name": "BANK SAMPAH SABAR",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "LINK.CIGICEH, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_173",
+    "name": "BANK SAMPAH LESTARI MANDIRI",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "JOMBANG-MASIGIT, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_174",
+    "name": "BANK SAMPAH WIJAYA KUSUMAH",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "LINK. SUKA DAMAI, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_175",
+    "name": "BANK SAMPAH ALBUSTANIYAH",
+    "lat": -6.017389,
+    "lon": 106.0537688,
+    "address": "LINK. SEKOLAH MASYARAKAT BAGENDUNG, Kota Cilegon",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_176",
+    "name": "Bank Sampah Digital",
+    "lat": -6.1169662,
+    "lon": 106.1518079,
+    "address": "Perumahan Ciracas Serang, Kota Serang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_177",
+    "name": "Bank Sampah Induk Poster",
+    "lat": -6.1169662,
+    "lon": 106.1518079,
+    "address": "Jl.Kyai H.Abdul Latif, Kota Serang",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_178",
+    "name": "BANK SAMPAH INDUK MARGA PERTIWI LESTARI",
+    "lat": -8.5566523,
+    "lon": 115.0010149,
+    "address": "BANJAR DINAS BATANNYUH KAJA, DESA BATANNYUH KEC. MARGA, Kab. Tabanan",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_179",
+    "name": "Bank Sampah Induk Griya Luhu",
+    "lat": -8.7045117,
+    "lon": 115.3523218,
+    "address": "Kelurahan Beng, Kab. Gianyar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_180",
+    "name": "Bank Sampah Induk Parahyangan Green Recycle",
+    "lat": -8.7045117,
+    "lon": 115.3523218,
+    "address": "Desa Melinggih, Payangan, Kab. Gianyar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_181",
+    "name": "Bank Sampah Induk Bank Sampah Mitra Gianyar \"BAGUS\"",
+    "lat": -8.7045117,
+    "lon": 115.3523218,
+    "address": "Jalan Raya Temesi Dusun Temesi, Gianyar, Kab. Gianyar",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_182",
+    "name": "Bank Sampah Wahyu Segara",
+    "lat": -8.7446026,
+    "lon": 115.5575442,
+    "address": "Desa Nusa Penida, Kab. Klungkung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_183",
+    "name": "Bank Sampah Wangun Arta",
+    "lat": -8.7446026,
+    "lon": 115.5575442,
+    "address": "Dusun Kanginan,Desa Pakse Bali, Kab. Klungkung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_184",
+    "name": "Bank Sampah Sri Rejeki",
+    "lat": -8.7446026,
+    "lon": 115.5575442,
+    "address": "Dsn.Pau Ds.Tihingan Banjarangkan, Kab. Klungkung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_185",
+    "name": "Bank sampah Takmung Asri",
+    "lat": -8.7446026,
+    "lon": 115.5575442,
+    "address": "Takmung, Banjarangkan, Kab. Klungkung",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_186",
+    "name": "Dywik",
+    "lat": -8.3333362,
+    "lon": 115.3682812,
+    "address": "Jl. DR. Ir. Suekarno Br. Siladan, Desa Tamanbali, Bangli, Bangli, Kab. Bangli",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_187",
+    "name": "Bank Sampah Induk Sentral Amlapura",
+    "lat": -8.3355616,
+    "lon": 115.617073,
+    "address": "Diponegoro, Karangasem, Kab. Karangasem",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_188",
+    "name": "Bank Sampah Pertiwiku",
+    "lat": -8.3355616,
+    "lon": 115.617073,
+    "address": "Jalan Raya Perasi, Karangasem, Kab. Karangasem",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_189",
+    "name": "Pengepul UD. Samudra Pasifik",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Kampung Jarat, Kelurahan Penarukan, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_190",
+    "name": "Pengepul UD. Bersaudara",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Dewi Sartika Utara, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_191",
+    "name": "Pengemul Amin",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Desa Pemaron, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_192",
+    "name": "Pengepul UD. HSM Jaya",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Samratulangi< Keluraham Penarukan, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_193",
+    "name": "Pengepul UD, Makmur Berkah Sejahtera",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "jalan Merak, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_194",
+    "name": "Pengepul Duo Elmas",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Jatayu, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_195",
+    "name": "Pengepul Saipul",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Kampung Jarat, Kelurahan Penarukan, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_196",
+    "name": "Pengepul Maskur",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan WR. Supratman, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_197",
+    "name": "Pengepul Latif",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Jatayu, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_198",
+    "name": "Pengepul UD. Salim Jaya",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Dewi Sartika, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_199",
+    "name": "Pengepul UD, Sabar",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Kampung Jarat, Kelurahan penarukan, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_200",
+    "name": "Pengepul Ahmad",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Kelurahan Banyuning, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  },
+  {
+    "id": "sipsn_201",
+    "name": "Dokter Caput",
+    "lat": -7.8428262,
+    "lon": 115.1970295,
+    "address": "Jalan Gajah Mada, Kab. Buleleng",
+    "hours": null,
+    "phone": null,
+    "types": [
+      "GENERAL"
+    ],
+    "source": "sipsn"
+  }
+]
