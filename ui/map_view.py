@@ -8,6 +8,7 @@ from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtWebChannel import QWebChannel
 from PyQt5.QtCore import QObject, pyqtSignal, pyqtSlot, QUrl, QTimer, QSettings, Qt
 from PyQt5.QtGui import QDesktopServices
+from PyQt5.QtCore import Qt
 
 # Try to import location services
 try:
@@ -523,7 +524,7 @@ class MapView(QWidget):
             # Empty state
             empty_label = QLabel("Tidak ada lokasi ditemukan.")
             empty_label.setStyleSheet("color: #64748b; font-size: 12px; padding: 20px;")
-            empty_label.setAlignment(2)  # Qt.AlignCenter
+            empty_label.setAlignment(Qt.AlignCenter)  # Qt.AlignCenter
             self.list_layout.addWidget(empty_label)
             return
         
