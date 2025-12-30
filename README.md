@@ -5,11 +5,12 @@ Aplikasi desktop Python untuk deteksi jenis plastik secara realtime dari webcam 
 ## Installation
 
 1. Create and activate a virtual environment:
+
 ```bash
 # Create virtual environment
 python3 -m venv venv
-#ensure u use python 3.14 to avoid error 
-#and make sure u have the c++ or c compiler installed for numpy 
+#ensure u use python 3.14 to avoid error
+#and make sure u have the c++ or c compiler installed for numpy
 
 # Activate virtual environment
 # On macOS/Linux:
@@ -19,6 +20,7 @@ source venv/bin/activate
 ```
 
 2. Install dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
@@ -28,6 +30,7 @@ pip install -r requirements.txt
 ### Desktop Application (CLI - Original)
 
 Run the desktop application with camera loop (command line interface):
+
 ```bash
 python app.py
 ```
@@ -39,11 +42,13 @@ Tekan **ESC** untuk keluar dari aplikasi.
 ### Desktop Application (GUI - NEW)
 
 Run the desktop application with PyQt5 GUI (realtime detection with modern interface):
+
 ```bash
 python app_gui.py
 ```
 
 **Features:**
+
 - 🎨 Modern GUI dengan PyQt5
 - 📹 Realtime video preview
 - 🤖 Live plastic classification
@@ -58,6 +63,7 @@ Tekan **ESC** atau tombol "Keluar" untuk menutup aplikasi.
 Run the web-based UI with API backend:
 
 1. **Start the Flask API backend:**
+
 ```bash
 python api.py
 ```
@@ -67,6 +73,7 @@ The API will run on `http://localhost:5001` (port 5001 karena 5000 conflict deng
 2. **Open the web interface:**
 
 Open `web/index.html` in your browser, or serve it with:
+
 ```bash
 cd web
 python -m http.server 8000
@@ -75,6 +82,7 @@ python -m http.server 8000
 Then visit `http://localhost:8000/index.html`
 
 **Web Features:**
+
 - 📸 Upload images or use webcam for classification
 - 🤖 AI classification with confidence scores
 - ♻️ Recycling recommendations
@@ -98,10 +106,14 @@ Then visit `http://localhost:8000/index.html`
 
 ### Desktop App (GUI) Features
 
-- **Modern PyQt5 Interface**: GUI yang clean dan professional
+- **Modern PyQt5 Interface**: GUI yang clean dan professional dengan 3-panel layout
 - **Realtime Video Preview**: Live camera feed dengan bbox overlay
 - **Live Classification**: Deteksi dan klasifikasi plastik secara realtime
 - **Information Panel**: Tampilan hasil, confidence score, dan rekomendasi
+- **Interactive Map**: Peta interaktif dengan 200+ lokasi Bank Sampah di seluruh Indonesia
+- **Location Search**: Cari dan filter lokasi berdasarkan jenis plastik
+- **Distance Calculation**: Menampilkan jarak dari lokasi pengguna ke setiap lokasi
+- **Navigation**: Tombol navigasi langsung ke Google Maps
 - **FPS Monitor**: Real-time FPS counter
 - **Keyboard Shortcuts**: ESC untuk keluar
 - **Smooth Animations**: Transisi yang halus dan responsive
@@ -118,12 +130,14 @@ Then visit `http://localhost:8000/index.html`
 ## Architecture
 
 ### Desktop App (CLI & GUI)
+
 ```
 Webcam → Bbox Detection (contours) → CSRT Tracker → ROI Crop →
 ResNet18 Classifier (throttled) → Overlay/Display (bbox + label + recommendation)
 ```
 
 ### Web App
+
 ```
 Browser (Upload/Camera) → Flask API → ResNet18 Classifier → JSON Response →
 Web UI Display (Label + Confidence + Recommendations)
@@ -132,8 +146,14 @@ Web UI Display (Label + Confidence + Recommendations)
 ### Key Components
 
 #### Desktop App
+
 - **app.py**: Original CLI-based realtime detection (OpenCV display)
 - **app_gui.py**: NEW - PyQt5 GUI-based realtime detection
+- **ui/main_window_new.py**: Main window with 3-panel layout (detection, video, map)
+- **ui/map_view.py**: Interactive map with QWebEngine + Leaflet showing 200+ locations
+- **location/excel_loader.py**: Load locations from Excel (data_sipsn.xlsx) with geocoding support
+- **location/geocode_all.py**: Batch geocoding script to create location cache
+- **domain/geo.py**: Geographic utilities (Haversine distance, location filtering)
 - **vision/bbox_detector.py**: Deteksi bbox menggunakan Canny edges + contours
 - **vision/bbox_tracker.py**: CSRT/KCF tracker untuk stabilisasi bbox
 - **vision/smoothing.py**: EMA smoothing untuk bbox dan confidence
@@ -141,6 +161,7 @@ Web UI Display (Label + Confidence + Recommendations)
 - **ui/camera_loop.py**: Main camera loop logic (used by app.py)
 
 #### Web App
+
 - **api.py**: Flask REST API endpoint untuk image classification
 - **web/index.html**: React-based web UI (single file, no build required)
 
@@ -151,11 +172,13 @@ Web UI Display (Label + Confidence + Recommendations)
 Classify a plastic item from an uploaded image.
 
 **Request:**
+
 - Method: `POST`
 - Content-Type: `multipart/form-data`
 - Body: `image` (file)
 
 **Response:**
+
 ```json
 {
   "label": "PET",
@@ -168,6 +191,7 @@ Classify a plastic item from an uploaded image.
 Check if the API is running.
 
 **Response:**
+
 ```json
 {
   "status": "ok"
@@ -181,24 +205,48 @@ The application uses a ResNet18 model trained for 4-class plastic classification
 **Classes:** HDPE, PET, PP, PS
 
 ## Project Structure
+
 ```
-plastitrace_desktop/
+plastitrace/
 ├── app.py                     # Entry point (Desktop CLI)
 ├── app_gui.py                 # Entry point (Desktop GUI - PyQt5)
 ├── api.py                     # Flask API backend (Web App)
 ├── requirements.txt
+├── data_sipsn.xlsx           # Source Excel file with Bank Sampah locations
 ├── models/
-│   └── plastitrace.pth
+│   └── plastitrace.pth       # ResNet18 model
+├── data/
+│   ├── locations_geocoded.json  # Cached geocoded locations (200 locations)
+│   ├── dropoff_seed.json        # Seed location data
+│   └── dropoff_locations.db     # SQLite database
 ├── ml/
 │   ├── config.py             # Constants & recommendations
 │   ├── classifier.py         # PyTorch ResNet18 classifier
 │   └── preprocess.py         # Image preprocessing
+├── location/
+│   ├── excel_loader.py       # Load locations from Excel with geocoding
+│   ├── geocode_all.py        # Batch geocoding script
+│   ├── dropoff_store.py      # Location database store
+│   └── dropoff_schema.py     # Location data schema
+├── domain/
+│   ├── models.py             # Detection & Location dataclasses
+│   ├── geo.py                # Geographic utilities (distance, filtering)
+│   └── filtering.py          # Temporal smoothing
 ├── vision/
 │   ├── bbox_detector.py      # Contour-based bbox detection
 │   ├── bbox_tracker.py       # CSRT/KCF tracker wrapper
 │   └── smoothing.py          # EMA smoothing
 ├── ui/
+│   ├── main_window_new.py    # Main window (3-panel layout)
+│   ├── map_view.py           # Interactive map widget
+│   ├── video_widget.py       # Video display widget
 │   └── camera_loop.py        # Camera loop logic (for app.py)
+├── workers/
+│   ├── capture_worker.py     # Camera capture worker thread
+│   └── inference_worker.py   # ML inference worker thread
+├── assets/
+│   └── map/
+│       └── leaflet.html      # Leaflet map HTML
 ├── utils/
 │   └── softmax.py            # Softmax utility
 └── web/
@@ -225,6 +273,7 @@ Default settings in `api.py`:
 - CORS: Enabled for all origins (restrict in production)
 
 **Web UI (`index.html`):**
+
 - API URL: `http://localhost:5001/api/classify`
 
 ## Recommendations
@@ -241,17 +290,21 @@ Aplikasi menampilkan rekomendasi daur ulang dalam Bahasa Indonesia:
 ### Desktop App (CLI & GUI)
 
 **Error: "No OpenCV tracker available"**
+
 - Install opencv-contrib-python: `pip install opencv-contrib-python`
 
 **Error: "No module named 'PyQt5'"** (GUI only)
+
 - Install PyQt5: `pip install PyQt5`
 
 **Low FPS or slow inference**
+
 - Reduce `inference_interval` in `app.py` or `app_gui.py`
 - Use smaller input images
 - Enable CUDA if available
 
 **Camera not detected**
+
 - Check if camera is already in use by another application
 - Try changing `camera_index` from 0 to 1 in the code
 - Check camera permissions in System Preferences (macOS)
@@ -259,39 +312,45 @@ Aplikasi menampilkan rekomendasi daur ulang dalam Bahasa Indonesia:
 ### Web App
 
 **Error: "Port 5001 is in use"**
+
 - Change port in `api.py`: `app.run(host='0.0.0.0', port=5002, debug=True)`
 - Update API URL in `web/index.html` to match new port
 
 **Error: "Cannot access camera"**
+
 - Grant browser permission to access camera
 - Use HTTPS (required for webcam on some browsers)
 - Check if camera is already in use
 
 **Error: "Failed to classify image"**
+
 - Make sure Flask API is running on `http://localhost:5001`
 - Check API logs for errors
 - Verify model file exists at `models/plastitrace.pth`
 
 **CORS errors**
+
 - Ensure flask-cors is installed: `pip install flask-cors`
 - Check browser console for specific CORS errors
 
 **macOS AirPlay Receiver conflict (Port 5000)**
+
 - Disable AirPlay Receiver in System Settings → General → AirDrop & Handoff
 - OR use port 5001 (already configured in api.py)
 
 ## Application Comparison
 
-| Feature | Desktop CLI | Desktop GUI | Web App |
-|---------|------------|-------------|---------|
-| Realtime Detection | ✅ Yes | ✅ Yes | ❌ No (capture only) |
-| Modern UI | ❌ No | ✅ Yes | ✅ Yes |
-| Installation | Easy | Easy | Medium |
-| Performance | Excellent | Excellent | Good |
-| Mobile Support | ❌ No | ❌ No | ✅ Yes |
-| Best For | Development/Testing | End Users (Desktop) | Web Access/Mobile |
+| Feature            | Desktop CLI         | Desktop GUI         | Web App              |
+| ------------------ | ------------------- | ------------------- | -------------------- |
+| Realtime Detection | ✅ Yes              | ✅ Yes              | ❌ No (capture only) |
+| Modern UI          | ❌ No               | ✅ Yes              | ✅ Yes               |
+| Installation       | Easy                | Easy                | Medium               |
+| Performance        | Excellent           | Excellent           | Good                 |
+| Mobile Support     | ❌ No               | ❌ No               | ✅ Yes               |
+| Best For           | Development/Testing | End Users (Desktop) | Web Access/Mobile    |
 
 **Recommendation:**
+
 - **Development/Debugging**: Use `app.py` (CLI)
 - **Desktop Users**: Use `app_gui.py` (PyQt5 GUI) - **RECOMMENDED**
 - **Web/Mobile Access**: Use Web App (`api.py` + `web/index.html`)
@@ -299,28 +358,34 @@ Aplikasi menampilkan rekomendasi daur ulang dalam Bahasa Indonesia:
 ## Production Deployment
 
 ### Desktop App
+
 - Package with PyInstaller for distribution:
+
 ```bash
   pip install pyinstaller
   pyinstaller --onefile --windowed app_gui.py
 ```
 
 ### Web App
+
 For production deployment:
 
 1. **Set Flask to production mode:**
    - Change `debug=True` to `debug=False` in `api.py`
    - Use a production WSGI server like Gunicorn:
+
 ```bash
      pip install gunicorn
      gunicorn -w 4 -b 0.0.0.0:5001 api:app
 ```
 
 2. **Configure CORS properly:**
+
    - Restrict allowed origins in `api.py`
    - Don't use `CORS(app)` with no parameters in production
 
 3. **Serve static files:**
+
    - Use Nginx or Apache to serve `web/index.html`
    - Configure reverse proxy to Flask API
 
@@ -341,6 +406,7 @@ For production deployment:
 ## Changelog
 
 ### v2.0 (Latest)
+
 - ✨ Added PyQt5 GUI desktop application (`app_gui.py`)
 - 🌐 Added web interface with React UI
 - 🔧 Fixed port conflict with macOS AirPlay (port 5001)
@@ -348,6 +414,7 @@ For production deployment:
 - 📝 Updated documentation
 
 ### v1.0
+
 - 🎯 Initial release with CLI desktop app
 - 🤖 ResNet18 classification
 - 📹 CSRT bbox tracking
