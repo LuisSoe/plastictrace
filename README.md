@@ -370,15 +370,19 @@ The application loads location data from Bank Sampah (waste bank) facilities acr
 ### Setting Up Location Data
 
 **Option 1: Use Pre-geocoded Cache (Recommended)**
+
 - The app automatically uses `data/locations_geocoded.json` if available
 - Fast loading, no geocoding needed
 - Already includes 200 locations with coordinates
 
 **Option 2: Geocode from Excel**
+
 - Run the geocoding script once to create the cache:
+
 ```bash
 python location/geocode_all.py
 ```
+
 - This will geocode all locations from `data_sipsn.xlsx` and save to `data/locations_geocoded.json`
 - Takes ~3-4 minutes for 200 locations (1 second per location due to rate limiting)
 
