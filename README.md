@@ -133,7 +133,6 @@ Web UI Display (Label + Confidence + Recommendations)
 
 #### Desktop App
 - **app.py**: Original CLI-based realtime detection (OpenCV display)
-- **app_gui.py**: NEW - PyQt5 GUI-based realtime detection
 - **vision/bbox_detector.py**: Deteksi bbox menggunakan Canny edges + contours
 - **vision/bbox_tracker.py**: CSRT/KCF tracker untuk stabilisasi bbox
 - **vision/smoothing.py**: EMA smoothing untuk bbox dan confidence
