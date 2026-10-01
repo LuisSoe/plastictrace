@@ -1,12 +1,18 @@
+import os
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import cv2
 import numpy as np
-import base64
 from ml.classifier import PlastiTraceClassifier
 
 app = Flask(__name__)
-CORS(app)  # Allow frontend to call API
+
+allowed_origins = os.environ.get("ALLOWED_ORIGINS", "*")
+if allowed_origins == "*":
+    CORS(app)
+else:
+    CORS(app, origins=[origin.strip() for origin in allowed_origins.split(",") if origin.strip()])
 
 # Load model
 classifier = PlastiTraceClassifier("models/plastitrace.pth")
